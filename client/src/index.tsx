@@ -4,10 +4,14 @@ import LoginPage from "./pages/LoginPage.tsx";
 import SignUpPage from "./pages/SignUpPage.tsx";
 import DashboardPage from "./pages/DashboardPage.tsx";
 import PrivateRoute from "./components/PrivateRoute.tsx";
+import SiteHeader from "./components/SiteHeader";
+
+
 
 const App = () => {
   return (
     <Router>
+      <SiteHeader />
       <Routes>
         {/* public routes */}
         <Route path="/" element={<Homepage />} />
