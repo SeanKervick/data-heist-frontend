@@ -14,17 +14,19 @@ const Homepage = () => {
       <Box sx={{ display: "flex", justifyContent: "center", gap: 2, mt: 3 }}>
       <Link to='/signup'>
         <Button variant="contained" color="primary">
-          Sign Up
+          sign up
         </Button>
         </Link>
         <Link to='/login'>
           <Button variant="contained" color="primary">
-            Login
+            login
           </Button>
-        </Link>
+          </Link>
+        <Link to='/challenge/password-cracker'>
         <Button variant="contained" color="primary">
-          Continue as Guest
+          continue as guest
         </Button>
+        </Link>
       </Box>
     </Container>
   );

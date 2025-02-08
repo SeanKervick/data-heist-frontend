@@ -5,7 +5,7 @@ import SignUpPage from "./pages/SignUpPage.tsx";
 import DashboardPage from "./pages/DashboardPage.tsx";
 import PrivateRoute from "./components/PrivateRoute.tsx";
 import SiteHeader from "./components/SiteHeader";
-
+import PasswordCracker from "./pages/challenges/PasswordCrackerPage.tsx";
 
 
 const App = () => {
@@ -17,6 +17,7 @@ const App = () => {
         <Route path="/" element={<Homepage />} />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/signup" element={<SignUpPage />} />
+        <Route path="/challenge/password-cracker" element={<PasswordCracker />} />
 
         {/* protected routes */}
         <Route element={<PrivateRoute />}>

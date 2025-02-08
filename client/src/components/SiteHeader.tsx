@@ -10,6 +10,7 @@ const SiteHeader: React.FC = () => {
     { label: "Dashboard", path: "/dashboard" },
     { label: "Login", path: "/login" },
     { label: "Sign Up", path: "/signup" },
+    { label: "play as guest", path: "/challenge/password-cracker" },
   ];
 
   return (
@@ -17,7 +18,7 @@ const SiteHeader: React.FC = () => {
       <AppBar position="fixed" elevation={0} color="primary">
         <Toolbar sx={{ justifyContent: "space-between" }}>
           <Link to="/" style={{ textDecoration: "none", color: "inherit" }}>
-            <Typography variant="h5">Data-Heist</Typography>
+            <Typography variant="h5">data-heist</Typography>
           </Link>
           <Box>
             {menuOptions.map((opt) => (

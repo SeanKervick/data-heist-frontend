@@ -1,0 +1,87 @@
+import React, { useState } from "react";
+import { Container, Typography, TextField, Button, Box, Card, CardContent, Avatar, Alert } from "@mui/material";
+import { useNavigate } from "react-router-dom";
+import DialogBox from "../../components/DialogBox";
+
+const PasswordCrackerChallenge = () => {
+  const navigate = useNavigate();
+  // state variables
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
+  const [success, setSuccess] = useState(false);
+  const [showDialog, setShowDialog] = useState(true); // dialog box shown at start
+
+  // social media profile object
+  const profile = {
+    name: "Chris Jameson",
+    username: "@chrisj90",
+    bio: "Mountain Biking, Swimming, and my dog Max!",
+    profilePic: "/images/profile.jpg",
+    correctPassword: "Max",
+  };
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault(); // stops browser from reloading the page
+    setError("");
+    setSuccess(false);
+
+    if (password === profile.correctPassword) {
+      setSuccess(true);
+      setShowDialog(true); // dialog box before next challenge
+    } else {
+      setError("Incorrect password. Try again!"); // show error
+    }
+  };
+
+  const handleDialogClose = () => {
+    setShowDialog(false);
+    if (success) {
+      navigate("/"); // direct to next challenge
+    }
+  };
+
+  return (
+    <Container maxWidth="sm" sx={{ textAlign: "center", mt: 5 }}>
+      <DialogBox
+        open={showDialog}
+        title={success ? "Challenge Complete!" : "Challenge 1: Password Cracker!"}
+        // challenge explanation (shown at start) & educational message (shown at end)
+        message={success ? "Well done, you cracked the password! Although this task was easy, it highlights the importance of password strength and & keeping hints off social media." : "Read this person's social media bio and guess their password."}
+        buttonText={success ? "next challenge" : "OK" }
+        onClose={handleDialogClose}
+      />
+
+      {/* profile card */}
+      <Card sx={{ p: 3, textAlign: "center" }}>
+        <CardContent>
+          <Avatar src={profile.profilePic} sx={{ width: 100, height: 100, margin: "auto" }} />
+          <Typography variant="h5" sx={{ mt: 2 }}>{profile.name}</Typography>
+          <Typography variant="subtitle1" color="text.secondary">{profile.username}</Typography>
+          <Typography variant="body1" sx={{ mt: 2, fontStyle: "italic" }}>
+            "{profile.bio}"
+          </Typography>
+        </CardContent>
+      </Card>
+
+      {/* password form */}
+      <Box component="form" onSubmit={handleSubmit} sx={{ display: "flex", flexDirection: "column", gap: 2, mt: 3 }}>
+        <Typography variant="body1">enter the password:</Typography>
+        <TextField
+          type="text"
+          variant="outlined"
+          fullWidth
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+          required
+        />
+        <Button type="submit" variant="contained" color="primary" fullWidth>
+          submit
+        </Button>
+      </Box>
+      {/* conditional rendering - if error (true) then render the alert */}
+      {error && <Alert severity="error" sx={{ mt: 2 }}>{error}</Alert>}
+    </Container>
+  );
+};
+
+export default PasswordCrackerChallenge;
