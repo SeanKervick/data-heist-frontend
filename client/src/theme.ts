@@ -20,7 +20,7 @@ const darkTheme = createTheme({
   },
   typography: {
     fontFamily: "'Courier New', monospace", // hacker-style/matrix font
-    fontSize: 18, // default text size
+    fontSize: 14, // default text size
     h1: {
       fontSize: "5rem",
     },
@@ -28,23 +28,26 @@ const darkTheme = createTheme({
       fontSize: "2.5rem",
     },
     h3: {
-      fontSize: "2rem",
-    },
-    body1: {
       fontSize: "1.5rem",
     },
-    body2: {
+    body1: {
       fontSize: "1rem",
     },
+    body2: {
+      fontSize: "0.5rem",
+    },
+
   },
   components: {
     MuiCssBaseline: {
       styleOverrides: {
         body: {
           display: "flex",
+          flexDirection: "column",
           justifyContent: "center",
           alignItems: "center",
           height: "100vh",
+          width: "100vw",
           margin: 0,
           padding: 0,
           textAlign: "center",

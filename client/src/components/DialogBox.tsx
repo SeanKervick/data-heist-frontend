@@ -4,7 +4,7 @@ import { DialogBoxProps } from "../types/interfaces"
 
 const DialogBox: React.FC<DialogBoxProps> = ({ open, title, message, buttonText, onClose }) => {
   return (
-    <Dialog open={open} onClose={onClose} fullWidth maxWidth="sm">
+    <Dialog open={open} onClose={onClose} maxWidth="md">
       <DialogTitle>{title}</DialogTitle>
       <DialogContent>
         <Typography>{message}</Typography>

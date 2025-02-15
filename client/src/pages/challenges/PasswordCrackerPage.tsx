@@ -1,5 +1,15 @@
 import React, { useState } from "react";
-import { Container, Typography, TextField, Button, Box, Card, CardContent, Avatar, Alert } from "@mui/material";
+import {
+  Container,
+  Typography,
+  TextField,
+  Button,
+  Box,
+  Card,
+  CardContent,
+  Avatar,
+  Alert,
+} from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import DialogBox from "../../components/DialogBox";
 
@@ -36,27 +46,41 @@ const PasswordCrackerChallenge = () => {
   const handleDialogClose = () => {
     setShowDialog(false);
     if (success) {
-      navigate("/"); // direct to next challenge
+      navigate("/challenge/spot-the-phish"); // direct to next challenge
     }
   };
 
   return (
     <Container maxWidth="sm" sx={{ textAlign: "center", mt: 5 }}>
+      {/* dialog box */}
       <DialogBox
         open={showDialog}
-        title={success ? "Challenge Complete!" : "Challenge 1: Password Cracker!"}
+        title={
+          success ? "Challenge Complete!" : "Challenge 1: Password Cracker!"
+        }
         // challenge explanation (shown at start) & educational message (shown at end)
-        message={success ? "Well done, you cracked the password! Although this task was easy, it highlights the importance of password strength and & keeping hints off social media." : "Read this person's social media bio and guess their password."}
-        buttonText={success ? "next challenge" : "OK" }
+        message={
+          success
+            ? "Well done, you cracked the password! Although this task was easy, it highlights the importance of password strength and & keeping hints off social media."
+            : "Read this person's social media bio and guess their password."
+        }
+        buttonText={success ? "next challenge" : "OK"}
         onClose={handleDialogClose}
       />
 
       {/* profile card */}
       <Card sx={{ p: 3, textAlign: "center" }}>
         <CardContent>
-          <Avatar src={profile.profilePic} sx={{ width: 100, height: 100, margin: "auto" }} />
-          <Typography variant="h5" sx={{ mt: 2 }}>{profile.name}</Typography>
-          <Typography variant="subtitle1" color="text.secondary">{profile.username}</Typography>
+          <Avatar
+            src={profile.profilePic}
+            sx={{ width: 100, height: 100, margin: "auto" }}
+          />
+          <Typography variant="h5" sx={{ mt: 2 }}>
+            {profile.name}
+          </Typography>
+          <Typography variant="subtitle1" color="text.secondary">
+            {profile.username}
+          </Typography>
           <Typography variant="body1" sx={{ mt: 2, fontStyle: "italic" }}>
             "{profile.bio}"
           </Typography>
@@ -64,7 +88,11 @@ const PasswordCrackerChallenge = () => {
       </Card>
 
       {/* password form */}
-      <Box component="form" onSubmit={handleSubmit} sx={{ display: "flex", flexDirection: "column", gap: 2, mt: 3 }}>
+      <Box
+        component="form"
+        onSubmit={handleSubmit}
+        sx={{ display: "flex", flexDirection: "column", gap: 2, mt: 3 }}
+      >
         <Typography variant="body1">enter the password:</Typography>
         <TextField
           type="text"
@@ -79,7 +107,11 @@ const PasswordCrackerChallenge = () => {
         </Button>
       </Box>
       {/* conditional rendering - if error (true) then render the alert */}
-      {error && <Alert severity="error" sx={{ mt: 2 }}>{error}</Alert>}
+      {error && (
+        <Alert severity="error" sx={{ mt: 2 }}>
+          {error}
+        </Alert>
+      )}
     </Container>
   );
 };

@@ -6,6 +6,8 @@ import DashboardPage from "./pages/DashboardPage.tsx";
 import PrivateRoute from "./components/PrivateRoute.tsx";
 import SiteHeader from "./components/SiteHeader";
 import PasswordCracker from "./pages/challenges/PasswordCrackerPage.tsx";
+import SpotThePhish from "./pages/challenges/SpotThePhishPage.tsx";
+
 
 
 const App = () => {
@@ -18,6 +20,8 @@ const App = () => {
         <Route path="/login" element={<LoginPage />} />
         <Route path="/signup" element={<SignUpPage />} />
         <Route path="/challenge/password-cracker" element={<PasswordCracker />} />
+        <Route path="/challenge/spot-the-phish" element={<SpotThePhish />} />
+
 
         {/* protected routes */}
         <Route element={<PrivateRoute />}>
