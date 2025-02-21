@@ -11,3 +11,9 @@ export interface DialogBoxProps {
     answers: string[]; // array of strings 
     correctAnswer: number; // index of the correct answer
   }
+  
+  export interface TimerProps {
+    initialTime: number;
+    start: boolean; // timer stop/start control
+    onTimeUp: () => void;
+  }

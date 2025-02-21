@@ -3,19 +3,24 @@ import {   Container, Card, CardContent, Typography, Button, Box } from "@mui/ma
 import { quizQuestions } from "../../components/QuizQuestions.tsx";
 import { useNavigate } from "react-router-dom";
 import DialogBox from "../../components/DialogBox";
+import Timer from "../../components/Timer";
 
 
 const QuizRound = () => {
   const navigate = useNavigate();
   // state variables
-  const [currentQuestion, setCurrentQuestion] = useState<number>(0);
-  const [selectedAnswers, setSelectedAnswers] = useState<number[]>([]); // to store id's of selected answers
-  const [success, setSuccess] = useState<boolean>(false);
+  const [currentQuestion, setCurrentQuestion] = useState<number>(0); 
+  const [correctAnswers, setCorrectAnswers] = useState<number>(0); // to store number of correct answers
+  const [success, setSuccess] = useState<boolean>(false); // for navigation control
   const [showDialog, setShowDialog] = useState<boolean>(true); // dialog box shown at start
+  const [timerStart, setTimerStart] = useState<boolean>(false); // timer control
+
 
   const handleAnswerClick = (index: number) => {
-    // add the id of selcted answer to the array (https://react.dev/learn/updating-arrays-in-state)
-    setSelectedAnswers([...selectedAnswers, index]);
+  // check if the selected answer (index)  is correct
+  if (index === quizQuestions[currentQuestion].correctAnswer) {
+    setCorrectAnswers(correctAnswers + 1);
+  }
 
     // if currentQuestion <number> is less than the array of questions, add 1 (move to next question)
     if (currentQuestion < quizQuestions.length - 1) {
@@ -23,16 +28,24 @@ const QuizRound = () => {
     } else {
       // end of quiz
       setSuccess(true); // for navigation to feedback page
+      setTimerStart(false); // stop timer on success
       setShowDialog(true); // show dialog box at end of game
     }
   };
 
   const handleDialogClose = () => {
     setShowDialog(false);
+    setTimerStart(true); // start timer
     if (success) {
       navigate("/challenge/endgame"); // direct to feedback page
     }
   };
+
+const handleTimeUp = () => {
+    console.log("time's up");
+    // handle action when time runs out here
+  };
+
 
   return (
     <Container>
@@ -45,7 +58,7 @@ const QuizRound = () => {
               success ? (
                 <>
                   <Typography>
-                    You got 2/3 questions correct
+                    You got {correctAnswers}/{quizQuestions.length} questions correct
                     <br />
                     <br />
                   </Typography>
@@ -57,6 +70,9 @@ const QuizRound = () => {
             buttonText={success ? "end game" : "OK"}
             onClose={handleDialogClose}
           />
+
+      {/* timer not shown at end of challenge */}
+      {!success && <Timer initialTime={60} start={timerStart} onTimeUp={handleTimeUp} />}
 
       {/* ------------------ questions --------------------------*/}
       <Card sx={{ maxWidth: 800, p: 3, textAlign: "center" }}>

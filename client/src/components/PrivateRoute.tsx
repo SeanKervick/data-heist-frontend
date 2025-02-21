@@ -1,4 +1,4 @@
-// credit: 
+// credit: https://blog.stackademic.com/how-to-create-a-private-route-in-react-typescript-d43e2b162d46
 
 import { Navigate, Outlet } from "react-router-dom";
 

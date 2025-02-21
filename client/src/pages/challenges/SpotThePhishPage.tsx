@@ -9,6 +9,7 @@ import {
 } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import DialogBox from "../../components/DialogBox";
+import Timer from "../../components/Timer";
 
 const SpotThePhish = () => {
   const navigate = useNavigate();
@@ -16,6 +17,8 @@ const SpotThePhish = () => {
   const [foundFlags, setFoundFlags] = useState<number[]>([]); // initialize state variable as an [empty] array of numbers for finding red flags
   const [success, setSuccess] = useState<boolean>(false);
   const [showDialog, setShowDialog] = useState<boolean>(true); // dialog box shown at start
+  const [timerStart, setTimerStart] = useState<boolean>(false); // timer control
+  
 
   const handleFlagClick = (id: number) => {
     // if foundFlags does not include the id of the clicked flag
@@ -25,15 +28,22 @@ const SpotThePhish = () => {
     }
     if (foundFlags.length + 1 === 3) {
       setSuccess(true); // for navigation to next challenge
+      setTimerStart(false); // stop timer on success
       setShowDialog(true); // show dialog box at end of game
     }
   };
 
   const handleDialogClose = () => {
     setShowDialog(false);
+    setTimerStart(true); // start timer
     if (success) {
       navigate("/challenge/quiz"); // direct to next challenge
     }
+  };
+
+  const handleTimeUp = () => {
+    console.log("time's up");
+    // handle action when time runs out here
   };
 
   return (
@@ -70,6 +80,8 @@ const SpotThePhish = () => {
         buttonText={success ? "next challenge" : "OK"}
         onClose={handleDialogClose}
       />
+      {/* timer not shown at end of challenge */}
+      {!success && <Timer initialTime={60} start={timerStart} onTimeUp={handleTimeUp} />}
 
       {/* ------------------ challenge card --------------------------*/}
       <Card sx={{ maxWidth: 1200, color: "white", textAlign: "left", pt: 5, margin: "20", }} >

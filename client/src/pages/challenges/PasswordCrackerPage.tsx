@@ -12,23 +12,18 @@ import {
 } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import DialogBox from "../../components/DialogBox";
+import { profile } from "../../components/Profiles";
+import Timer from "../../components/Timer";
+
 
 const PasswordCrackerChallenge = () => {
   const navigate = useNavigate();
   // state variables
   const [password, setPassword] = useState<string>("");
   const [error, setError] = useState<string>("");
-  const [success, setSuccess] = useState<boolean>(false);
+  const [success, setSuccess] = useState<boolean>(false); // for navigation control
   const [showDialog, setShowDialog] = useState<boolean>(true); // dialog box shown at start
-
-  // social media profile object
-  const profile = {
-    name: "Chris Jameson",
-    username: "@chrisj90",
-    bio: "Mountain Biking, Swimming, and my dog Max!",
-    profilePic: "/images/profile.jpg",
-    correctPassword: "Max",
-  };
+  const [timerStart, setTimerStart] = useState<boolean>(false); // timer control
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault(); // stops browser from reloading the page
@@ -37,6 +32,7 @@ const PasswordCrackerChallenge = () => {
 
     if (password === profile.correctPassword) {
       setSuccess(true);
+      setTimerStart(false); // stop timer on success
       setShowDialog(true); // dialog box before next challenge
     } else {
       setError("Incorrect password. Try again!"); // show error
@@ -45,10 +41,17 @@ const PasswordCrackerChallenge = () => {
 
   const handleDialogClose = () => {
     setShowDialog(false);
+    setTimerStart(true); // start timer
     if (success) {
       navigate("/challenge/spot-the-phish"); // direct to next challenge
     }
   };
+
+  const handleTimeUp = () => {
+    console.log("time's up");
+    // handle action when time runs out here
+  };
+  
 
   return (
     <Container maxWidth="sm" sx={{ textAlign: "center", mt: 5 }}>
@@ -67,6 +70,8 @@ const PasswordCrackerChallenge = () => {
         buttonText={success ? "next challenge" : "OK"}
         onClose={handleDialogClose}
       />
+      {/* timer not shown at end of challenge */}
+      {!success && <Timer initialTime={60} start={timerStart} onTimeUp={handleTimeUp} />}
 
       {/* profile card */}
       <Card sx={{ p: 3, textAlign: "center" }}>
