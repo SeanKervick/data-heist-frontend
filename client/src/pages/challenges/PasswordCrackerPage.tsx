@@ -16,10 +16,10 @@ import DialogBox from "../../components/DialogBox";
 const PasswordCrackerChallenge = () => {
   const navigate = useNavigate();
   // state variables
-  const [password, setPassword] = useState("");
-  const [error, setError] = useState("");
-  const [success, setSuccess] = useState(false);
-  const [showDialog, setShowDialog] = useState(true); // dialog box shown at start
+  const [password, setPassword] = useState<string>("");
+  const [error, setError] = useState<string>("");
+  const [success, setSuccess] = useState<boolean>(false);
+  const [showDialog, setShowDialog] = useState<boolean>(true); // dialog box shown at start
 
   // social media profile object
   const profile = {

@@ -14,8 +14,8 @@ const SpotThePhish = () => {
   const navigate = useNavigate();
   // state variables
   const [foundFlags, setFoundFlags] = useState<number[]>([]); // initialize state variable as an [empty] array of numbers for finding red flags
-  const [success, setSuccess] = useState(false);
-  const [showDialog, setShowDialog] = useState(true); // dialog box shown at start
+  const [success, setSuccess] = useState<boolean>(false);
+  const [showDialog, setShowDialog] = useState<boolean>(true); // dialog box shown at start
 
   const handleFlagClick = (id: number) => {
     // if foundFlags does not include the id of the clicked flag
@@ -24,15 +24,15 @@ const SpotThePhish = () => {
       setFoundFlags([...foundFlags, id]);
     }
     if (foundFlags.length + 1 === 3) {
-      setSuccess(true);
-      setShowDialog(true);
+      setSuccess(true); // for navigation to next challenge
+      setShowDialog(true); // show dialog box at end of game
     }
   };
 
   const handleDialogClose = () => {
     setShowDialog(false);
     if (success) {
-      navigate("/challenge/next"); // direct to next challenge
+      navigate("/challenge/quiz"); // direct to next challenge
     }
   };
 
@@ -64,7 +64,7 @@ const SpotThePhish = () => {
               </Box>
             </>
           ) : (
-            "Scan this Phishing email and identify (click on) 3 red flags that indicate it is suspicious."
+            "Scan this email and identify (by clicking on) 3 red flags that indicate it's phishyness."
           )
         }
         buttonText={success ? "next challenge" : "OK"}

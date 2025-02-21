@@ -5,3 +5,9 @@ export interface DialogBoxProps {
     buttonText: string;
     onClose: () => void;
   }
+
+  export interface QuizQuestion {
+    question: string;
+    answers: string[]; // array of strings 
+    correctAnswer: number; // index of the correct answer
+  }
