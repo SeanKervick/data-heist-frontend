@@ -1,5 +1,5 @@
 import { useState } from "react";
-import {   Container, Card, CardContent, Typography, Button, Box } from "@mui/material";
+import { Container, Card, CardContent, Typography, Button, Box } from "@mui/material";
 import { quizQuestions } from "../../components/QuizQuestions.tsx";
 import { useNavigate } from "react-router-dom";
 import DialogBox from "../../components/DialogBox";
@@ -13,13 +13,22 @@ const QuizRound = () => {
   const [correctAnswers, setCorrectAnswers] = useState<number>(0); // to store number of correct answers
   const [success, setSuccess] = useState<boolean>(false); // for navigation control
   const [showDialog, setShowDialog] = useState<boolean>(true); // dialog box shown at start
-  const [timerStart, setTimerStart] = useState<boolean>(false); // timer control
+  // timer control
+  const [timerStart, setTimerStart] = useState<boolean>(false);
+  const [time, setTime] = useState<number>(0);
+  // score keeping
+  const [challengeScore, setChallengeScore] = useState<number>(0);
+  const totalScore = (Number(localStorage.getItem("totalScore")));
+  console.log(`C3 total score is: ${totalScore}`);
 
 
   const handleAnswerClick = (index: number) => {
+  let newCorrectAnswers = correctAnswers; // start with current correctAnswers value
+
   // check if the selected answer (index)  is correct
   if (index === quizQuestions[currentQuestion].correctAnswer) {
-    setCorrectAnswers(correctAnswers + 1);
+    newCorrectAnswers += 1; // increment correctAnswers
+    setCorrectAnswers(newCorrectAnswers); // update state
   }
 
     // if currentQuestion <number> is less than the array of questions, add 1 (move to next question)
@@ -27,9 +36,16 @@ const QuizRound = () => {
       setCurrentQuestion(currentQuestion + 1);
     } else {
       // end of quiz
-      setSuccess(true); // for navigation to feedback page
-      setTimerStart(false); // stop timer on success
-      setShowDialog(true); // show dialog box at end of game
+      setSuccess(true);
+      setTimerStart(false); // stop the timer
+
+      const challengeTotal = time + (newCorrectAnswers * 10); // calculate challenge total
+      setChallengeScore(challengeTotal);  // update state for end of challenge dialog box UI
+      
+      const updatedTotal =  totalScore + challengeTotal; // calculate overall total
+      localStorage.setItem("totalScore", updatedTotal.toString()); // store updated total score
+
+      setShowDialog(true); // show dialog at end of this challenge
     }
   };
 
@@ -37,7 +53,7 @@ const QuizRound = () => {
     setShowDialog(false);
     setTimerStart(true); // start timer
     if (success) {
-      navigate("/challenge/endgame"); // direct to feedback page
+      navigate("/feedback"); // direct to feedback page
     }
   };
 
@@ -52,7 +68,7 @@ const handleTimeUp = () => {
             {/* ------------------ dialog box --------------------------*/}
             <DialogBox
             open={showDialog}
-            title={success ? "Challenge Complete!" : "Challenge 3: Quiz Round!"}
+            title={success ? `Challenge 3 Complete! You scored ${challengeScore} points!` : "Challenge 3: Quiz Round!"}
             // challenge explanation (shown at start) & educational message (shown at end)
             message={
               success ? (
@@ -72,7 +88,7 @@ const handleTimeUp = () => {
           />
 
       {/* timer not shown at end of challenge */}
-      {!success && <Timer initialTime={60} start={timerStart} onTimeUp={handleTimeUp} />}
+      {!success && <Timer initialTime={60} onTimeUp={handleTimeUp} start={timerStart} onTimeUpdate={setTime} />}
 
       {/* ------------------ questions --------------------------*/}
       <Card sx={{ maxWidth: 800, p: 3, textAlign: "center" }}>

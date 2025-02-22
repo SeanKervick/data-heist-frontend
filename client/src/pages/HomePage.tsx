@@ -23,7 +23,11 @@ const Homepage = () => {
           </Button>
           </Link>
         <Link to='/challenge/password-cracker'>
-        <Button variant="contained" color="primary">
+        <Button 
+          variant="contained"
+          color="primary"
+          onClick={() => { localStorage.removeItem("totalScore"); }} // reset score on new game
+        >
           continue as guest
         </Button>
         </Link>

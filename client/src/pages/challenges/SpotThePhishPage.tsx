@@ -1,12 +1,5 @@
 import { useState } from "react";
-import {
-  Container,
-  Avatar,
-  Box,
-  Card,
-  CardContent,
-  Typography,
-} from "@mui/material";
+import { Container, Avatar, Box, Card, CardContent, Typography } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import DialogBox from "../../components/DialogBox";
 import Timer from "../../components/Timer";
@@ -17,7 +10,14 @@ const SpotThePhish = () => {
   const [foundFlags, setFoundFlags] = useState<number[]>([]); // initialize state variable as an [empty] array of numbers for finding red flags
   const [success, setSuccess] = useState<boolean>(false);
   const [showDialog, setShowDialog] = useState<boolean>(true); // dialog box shown at start
-  const [timerStart, setTimerStart] = useState<boolean>(false); // timer control
+  // timer control
+  const [timerStart, setTimerStart] = useState<boolean>(false);
+  const [time, setTime] = useState<number>(0);
+  // score keeping
+  const [challengeScore, setChallengeScore] = useState<number>(0);
+  const totalScore = (Number(localStorage.getItem("totalScore")));
+  console.log(`C2 total score is: ${totalScore}`);
+
   
 
   const handleFlagClick = (id: number) => {
@@ -27,9 +27,16 @@ const SpotThePhish = () => {
       setFoundFlags([...foundFlags, id]);
     }
     if (foundFlags.length + 1 === 3) {
-      setSuccess(true); // for navigation to next challenge
-      setTimerStart(false); // stop timer on success
-      setShowDialog(true); // show dialog box at end of game
+      setSuccess(true);
+      setTimerStart(false); // Stop the timer
+
+
+      setChallengeScore(time); // set challenge score for end of challenge dialog UI
+      const updatedTotal = totalScore + time; // calculate total score
+      localStorage.setItem("totalScore", (updatedTotal).toString()); // store updated total score
+
+
+      setShowDialog(true); // Show dialog before next challenge
     }
   };
 
@@ -51,7 +58,7 @@ const SpotThePhish = () => {
       {/* ------------------ dialog box --------------------------*/}
       <DialogBox
         open={showDialog}
-        title={success ? "Challenge Complete!" : "Challenge 2: Spot The Phish!"}
+        title={success ? `Challenge 2 Complete! You scored ${challengeScore} points!` : "Challenge 2: Spot The Phish!"}
         // challenge explanation (shown at start) & educational message (shown at end)
         message={
           success ? (
@@ -81,7 +88,7 @@ const SpotThePhish = () => {
         onClose={handleDialogClose}
       />
       {/* timer not shown at end of challenge */}
-      {!success && <Timer initialTime={60} start={timerStart} onTimeUp={handleTimeUp} />}
+      {!success && <Timer initialTime={60} onTimeUp={handleTimeUp} start={timerStart} onTimeUpdate={setTime} />}
 
       {/* ------------------ challenge card --------------------------*/}
       <Card sx={{ maxWidth: 1200, color: "white", textAlign: "left", pt: 5, margin: "20", }} >

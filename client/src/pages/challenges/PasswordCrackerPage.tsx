@@ -1,15 +1,5 @@
 import React, { useState } from "react";
-import {
-  Container,
-  Typography,
-  TextField,
-  Button,
-  Box,
-  Card,
-  CardContent,
-  Avatar,
-  Alert,
-} from "@mui/material";
+import { Container, Typography, TextField, Button, Box, Card, CardContent, Avatar, Alert } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import DialogBox from "../../components/DialogBox";
 import { profile } from "../../components/Profiles";
@@ -23,7 +13,13 @@ const PasswordCrackerChallenge = () => {
   const [error, setError] = useState<string>("");
   const [success, setSuccess] = useState<boolean>(false); // for navigation control
   const [showDialog, setShowDialog] = useState<boolean>(true); // dialog box shown at start
-  const [timerStart, setTimerStart] = useState<boolean>(false); // timer control
+  // timer control
+  const [timerStart, setTimerStart] = useState<boolean>(false);
+  const [time, setTime] = useState<number>(0);
+  // score keeping
+  const [challengeScore, setChallengeScore] = useState<number>(0);
+  const totalScore = (Number(localStorage.getItem("totalScore")));
+  console.log(`C1 total score is: ${totalScore}`);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault(); // stops browser from reloading the page
@@ -32,8 +28,14 @@ const PasswordCrackerChallenge = () => {
 
     if (password === profile.correctPassword) {
       setSuccess(true);
-      setTimerStart(false); // stop timer on success
-      setShowDialog(true); // dialog box before next challenge
+      setTimerStart(false); // stop the timer
+
+      setChallengeScore(time); // update state for end of challenge dialog box UI
+      const updatedTotal = totalScore + time; // calculate total score
+      localStorage.setItem("totalScore", (updatedTotal).toString()); // store updated total score
+
+      setShowDialog(true); // show dialog at end of this challenge
+      
     } else {
       setError("Incorrect password. Try again!"); // show error
     }
@@ -51,7 +53,7 @@ const PasswordCrackerChallenge = () => {
     console.log("time's up");
     // handle action when time runs out here
   };
-  
+
 
   return (
     <Container maxWidth="sm" sx={{ textAlign: "center", mt: 5 }}>
@@ -59,7 +61,7 @@ const PasswordCrackerChallenge = () => {
       <DialogBox
         open={showDialog}
         title={
-          success ? "Challenge Complete!" : "Challenge 1: Password Cracker!"
+          success ? `Challenge 1 Complete! You scored ${challengeScore} points!` : "Challenge 1: Password Cracker!"
         }
         // challenge explanation (shown at start) & educational message (shown at end)
         message={
@@ -71,7 +73,7 @@ const PasswordCrackerChallenge = () => {
         onClose={handleDialogClose}
       />
       {/* timer not shown at end of challenge */}
-      {!success && <Timer initialTime={60} start={timerStart} onTimeUp={handleTimeUp} />}
+      {!success && <Timer initialTime={60} onTimeUp={handleTimeUp} start={timerStart} onTimeUpdate={setTime} />}
 
       {/* profile card */}
       <Card sx={{ p: 3, textAlign: "center" }}>
@@ -111,7 +113,7 @@ const PasswordCrackerChallenge = () => {
           submit
         </Button>
       </Box>
-      {/* conditional rendering - if error (true) then render the alert */}
+      {/* conditional rendering - if error (true) then render the alert (https://react.dev/learn/conditional-rendering) */}
       {error && (
         <Alert severity="error" sx={{ mt: 2 }}>
           {error}

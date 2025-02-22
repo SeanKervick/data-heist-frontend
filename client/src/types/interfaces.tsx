@@ -15,5 +15,6 @@ export interface DialogBoxProps {
   export interface TimerProps {
     initialTime: number;
     start: boolean; // timer stop/start control
-    onTimeUp: () => void;
+    onTimeUp: () => void; // function calls when time runs out
+    onTimeUpdate: (time: number) => void; // for tracking time to use for points
   }

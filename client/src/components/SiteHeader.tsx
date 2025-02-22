@@ -10,7 +10,6 @@ const SiteHeader: React.FC = () => {
     { label: "Dashboard", path: "/dashboard" },
     { label: "Login", path: "/login" },
     { label: "Sign Up", path: "/signup" },
-    { label: "play as guest", path: "/challenge/password-cracker" },
   ];
 
   return (
