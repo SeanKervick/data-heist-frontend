@@ -4,24 +4,24 @@ import { QuizQuestion } from "../types/interfaces"
 export const quizQuestions: QuizQuestion[] = [
     {
       question: "Q1: Which of the following is a strong password?",
-      answers: ["password123", "Max", "Tr#8!vP29xD"],
+      answers: ["9876passwrd49846", "Max1990", "Tr#8!vP29xD"],
       correctAnswer: 2, // index of correct answer
     },
     {
-      question: "Q2: Placeholder",
+      question: "Q2: What is the primary purpose of a Virtual Private Network (VPN)?",
       answers: [
-        "Correct",
-        "Placeholder",
-        "Placeholder",
+        "Boost internet speed",
+        "To log in to websites from different regions",
+        "To secure & encrypt your internet connection",
       ],
-      correctAnswer: 0, // index of correct answer
+      correctAnswer: 2, // index of correct answer
     },
     {
-      question: "Q3: Placeholder",
+      question: "Q3: Which of the following best defines malware",
       answers: [
-        "Placeholder",
-        "Correct",
-        "Placeholder",
+        "Software designed to improve system performance",
+        "Malicious software intended to damage",
+        "A tool used for encryption",
       ],
       correctAnswer: 1, // index of correct answer
     },

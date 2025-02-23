@@ -73,7 +73,7 @@ const PasswordCrackerChallenge = () => {
         onClose={handleDialogClose}
       />
       {/* timer not shown at end of challenge */}
-      {!success && <Timer initialTime={60} onTimeUp={handleTimeUp} start={timerStart} onTimeUpdate={setTime} />}
+      {!success && <Timer initialTime={30} onTimeUp={handleTimeUp} start={timerStart} onTimeUpdate={setTime} />}
 
       {/* profile card */}
       <Card sx={{ p: 3, textAlign: "center" }}>

@@ -80,7 +80,12 @@ const handleTimeUp = () => {
                   </Typography>
                 </>
               ) : (
+                <Typography>
                 "Answer the questions as quickly as possible to secure the most points!"
+                <br />
+                <br />
+                (Extra 10 points for each correct answer)
+                </Typography>
               )
             }
             buttonText={success ? "end game" : "OK"}
@@ -88,7 +93,7 @@ const handleTimeUp = () => {
           />
 
       {/* timer not shown at end of challenge */}
-      {!success && <Timer initialTime={60} onTimeUp={handleTimeUp} start={timerStart} onTimeUpdate={setTime} />}
+      {!success && <Timer initialTime={30} onTimeUp={handleTimeUp} start={timerStart} onTimeUpdate={setTime} />}
 
       {/* ------------------ questions --------------------------*/}
       <Card sx={{ maxWidth: 800, p: 3, textAlign: "center" }}>

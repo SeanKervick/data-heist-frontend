@@ -88,7 +88,7 @@ const SpotThePhish = () => {
         onClose={handleDialogClose}
       />
       {/* timer not shown at end of challenge */}
-      {!success && <Timer initialTime={60} onTimeUp={handleTimeUp} start={timerStart} onTimeUpdate={setTime} />}
+      {!success && <Timer initialTime={30} onTimeUp={handleTimeUp} start={timerStart} onTimeUpdate={setTime} />}
 
       {/* ------------------ challenge card --------------------------*/}
       <Card sx={{ maxWidth: 1200, color: "white", textAlign: "left", pt: 5, margin: "20", }} >
