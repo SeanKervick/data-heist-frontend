@@ -11,9 +11,6 @@ import QuizRound from "./pages/challenges/QuizRoundPage.tsx";
 import FeedbackPage from "./pages/FeedbackPage.tsx";
 
 
-
-
-
 const App = () => {
   return (
     <Router>
