@@ -1,11 +1,13 @@
 import React, { useState } from "react";
-import { Container, TextField, Button, Typography, Box } from "@mui/material";
+import { Container, TextField, Button, Typography, Box, Alert } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
 const SignUpPage = () => {
-  const [formData, setFormData] = useState({ email: "", password: "" });
+  const [formData, setFormData] = useState({ username: "", email: "", password: "" });
   const navigate = useNavigate(); // React Router useNavigate hook stored in a variable
+  const [error, setError] = useState<string | null>(null); // Stores error message
+  
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => { // type of event object specified
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -23,8 +25,9 @@ const SignUpPage = () => {
       localStorage.setItem("token", response.data.token);
       navigate("/dashboard"); // redirect to dashboard
 
-    } catch {
-      console.error("signup error:");
+    } catch (error) {
+      console.error("signup error frontend:", error);
+      setError("username already exists");
     }
   };
 
@@ -35,6 +38,15 @@ const SignUpPage = () => {
       </Typography>
 
       <Box component="form" onSubmit={handleSubmit} sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
+      <TextField
+          label="username"
+          type="username"
+          name="username"
+          variant="outlined"
+          fullWidth
+          onChange={handleChange}
+          required
+        />
         <TextField
           label="email"
           type="email"
@@ -54,9 +66,11 @@ const SignUpPage = () => {
           required
         />
         <Button type="submit" variant="contained" color="primary" fullWidth>
-          sign in
+          create account & login
         </Button>
       </Box>
+      {/* display error if exists */}
+      {error && <Alert sx={{ fontSize: "0.8rem", p: 2, }} severity="error" >{error}</Alert>}
     </Container>
   );
 };

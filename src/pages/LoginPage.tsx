@@ -1,11 +1,13 @@
 import React, { useState } from "react";
-import { Container, TextField, Button, Typography, Box } from "@mui/material";
+import { Container, TextField, Button, Typography, Box, Alert } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
 const LoginPage = () => {
   const [formData, setFormData] = useState({ email: "", password: "" });
   const navigate = useNavigate(); // React Router useNavigate hook stored in a variable
+  const [error, setError] = useState<string | null>(null); // stores error message
+
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => { // type of event object specified
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -23,8 +25,10 @@ const LoginPage = () => {
       localStorage.setItem("token", response.data.token);
       navigate("/dashboard"); // redirect to dashboard
 
-    } catch {
-      console.error("login error:");
+    } catch (error) {
+      setError("incorrect email or password. please try again.");
+      console.error("login error frontend :", error);
+
     }
   };
 
@@ -57,6 +61,10 @@ const LoginPage = () => {
           sign in
         </Button>
       </Box>
+      <Box >
+      {/* display error if exists */}
+      {error && <Alert sx={{ fontSize: "0.8rem", p: 2, }} severity="error" >{error}</Alert>}
+    </Box>
     </Container>
   );
 };
