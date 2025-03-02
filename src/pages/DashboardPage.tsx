@@ -1,8 +1,11 @@
 import { Button, Container, Typography } from "@mui/material";
 import { useNavigate } from "react-router-dom";
+import { useState } from "react";
 
 const DashboardPage = () => {
   const navigate = useNavigate();
+  const [username] = useState(localStorage.getItem("username"));
+
 
   const handleLogout = () => {
     localStorage.removeItem("token"); // remove JWT token
@@ -12,7 +15,8 @@ const DashboardPage = () => {
   return (
     <Container sx={{ textAlign: "center", mt: 5 }}>
       <Typography variant="h4" gutterBottom>
-        welcome to the dashboard
+        welcome, {username}!
+        to the dashboard
       </Typography>
       <Typography>you are now logged in.</Typography>
       <Button variant="contained" color="secondary" onClick={handleLogout} sx={{ mt: 3 }}>

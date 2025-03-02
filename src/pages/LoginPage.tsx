@@ -23,6 +23,7 @@ const LoginPage = () => {
       console.log("login successful:", response.data);
       // store JWT token locally in the browswer, may improve this later for better security
       localStorage.setItem("token", response.data.token);
+      localStorage.setItem("username", response.data.username); // save username in local storage for displaying in UI
       navigate("/dashboard"); // redirect to dashboard
 
     } catch (error) {
