@@ -19,17 +19,24 @@ const LoginPage = () => {
     // backend api call
     try {
       const response = await axios.post("http://localhost:5000/api/login", formData);
-      
-      console.log("login successful:", response.data);
-      // store JWT token locally in the browswer, may improve this later for better security
+  
+      console.log("Login successful:", response.data);
+  
+      // store user details locally
       localStorage.setItem("token", response.data.token);
-      localStorage.setItem("username", response.data.username); // save username in local storage for displaying in UI
-      navigate("/dashboard"); // redirect to dashboard
-
+      localStorage.setItem("username", response.data.username); // save username for UI
+      localStorage.setItem("role", response.data.role); // save role for access control
+  
+      // redirect based on role
+      if (response.data.role === "admin") {
+        navigate("/admin");
+      } else {
+        navigate("/dashboard");
+      }
+  
     } catch (error) {
-      setError("incorrect email or password. please try again.");
-      console.error("login error frontend :", error);
-
+      setError("Incorrect email or password. Please try again.");
+      console.error("login error frontend:", error);
     }
   };
 

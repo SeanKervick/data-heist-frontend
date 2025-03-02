@@ -15,8 +15,7 @@ const DashboardPage = () => {
   return (
     <Container sx={{ textAlign: "center", mt: 5 }}>
       <Typography variant="h4" gutterBottom>
-        welcome, {username}!
-        to the dashboard
+        welcome {username}!
       </Typography>
       <Typography>you are now logged in.</Typography>
       <Button variant="contained" color="secondary" onClick={handleLogout} sx={{ mt: 3 }}>

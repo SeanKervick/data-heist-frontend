@@ -18,3 +18,8 @@ export interface DialogBoxProps {
     onTimeUp: () => void; // function calls when time runs out
     onTimeUpdate: (time: number) => void; // for tracking time to use for points
   }
+
+  export interface User {
+    username: string;
+    email: string;
+  }

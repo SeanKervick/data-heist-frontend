@@ -9,6 +9,8 @@ import PasswordCracker from "./pages/challenges/PasswordCrackerPage.tsx";
 import SpotThePhish from "./pages/challenges/SpotThePhishPage.tsx";
 import QuizRound from "./pages/challenges/QuizRoundPage.tsx";
 import FeedbackPage from "./pages/FeedbackPage.tsx";
+import AdminPage from "./pages/AdminPage.tsx";
+
 
 
 const App = () => {
@@ -28,6 +30,7 @@ const App = () => {
         {/* protected routes */}
         <Route element={<PrivateRoute />}>
           <Route path="/dashboard" element={<DashboardPage />} />
+          <Route path="/admin" element={<AdminPage />} />
         </Route>
       </Routes>
     </Router>
