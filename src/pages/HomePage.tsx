@@ -22,7 +22,7 @@ const Homepage = () => {
             login
           </Button>
           </Link>
-        <Link to='/challenge/password-cracker'>
+        <Link to='/game-intro'>
         <Button 
           variant="contained"
           color="primary"

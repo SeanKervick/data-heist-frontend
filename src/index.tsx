@@ -10,6 +10,8 @@ import SpotThePhish from "./pages/challenges/SpotThePhishPage.tsx";
 import QuizRound from "./pages/challenges/QuizRoundPage.tsx";
 import FeedbackPage from "./pages/FeedbackPage.tsx";
 import AdminPage from "./pages/AdminPage.tsx";
+import GameIntroPage from "./pages/GameIntroPage.tsx";
+
 
 
 
@@ -26,6 +28,7 @@ const App = () => {
         <Route path="/challenge/spot-the-phish" element={<SpotThePhish />} />
         <Route path="/challenge/quiz" element={<QuizRound />} />
         <Route path="/feedback" element={<FeedbackPage />} />
+        <Route path="/game-intro" element={<GameIntroPage />} />
 
         {/* protected routes */}
         <Route element={<PrivateRoute />}>
