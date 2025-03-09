@@ -9,13 +9,13 @@ const GameIntroPage = () => {
       </Typography>
       <Typography variant="body1" sx={{ textAlign: "left", maxWidth: 800, mx: "auto" }}>
         <br />• Complete challenges within the time limit to earn points.
-        <br />• Bonus points: <strong>Correct Answers & Time Remaining</strong>.
+        <br />• Bonus points: <strong>Correct Answers & Time Remaining in each challenge</strong>.
         <br />• Points deducted for: <strong>Hints</strong>.
         <br />• <strong>Zero</strong> points for challenges skipped.
         <br />• Your final score will be displayed at the end.
         <br></br>
         <br />• When ready, choose your difficulty and begin:
-        <br />• <strong>Beginner</strong>: Introductory cybersecurity challenges.
+        <br />• <strong>Beginner</strong>: Introduction to cybersecurity.
         <br />• <strong>Advanced</strong>: Software & Network security challenges.
       </Typography>
 

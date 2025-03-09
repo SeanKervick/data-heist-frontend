@@ -34,7 +34,8 @@ const darkTheme = createTheme({
       fontSize: "1rem",
     },
     body2: {
-      fontSize: "0.5rem",
+      fontFamily: "monospace",
+      fontSize: "1rem",
     },
 
   },
