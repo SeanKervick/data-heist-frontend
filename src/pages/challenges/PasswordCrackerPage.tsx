@@ -76,11 +76,11 @@ const PasswordCrackerChallenge = () => {
       {!success && <Timer initialTime={30} onTimeUp={handleTimeUp} start={timerStart} onTimeUpdate={setTime} />}
 
       {/* profile card */}
-      <Card sx={{ p: 3, textAlign: "center" }}>
+      <Card sx={{ p: 1, textAlign: "center" }}>
         <CardContent>
           <Avatar
             src={profile.profilePic}
-            sx={{ width: 200, height: 200, margin: "auto" }}
+            sx={{ width: 150, height: 150, margin: "auto" }}
           />
           <Typography variant="h5" sx={{ mt: 2 }}>
             {profile.name}

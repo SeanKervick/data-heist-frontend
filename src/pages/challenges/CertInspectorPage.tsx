@@ -77,7 +77,7 @@ const CertInspectorChallenge = () => {
       {/* profile card */}
 
           <Avatar
-            src={"/images/cert-inspector1.png"}
+            src={"/images/cert-inspector.png"}
             sx={{ width: 200, height: 200, margin: "auto" }}
           />
 
