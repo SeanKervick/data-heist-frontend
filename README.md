@@ -1,6 +1,6 @@
 <p align="center">
 <h1 style="font-size: 36px; margin-bottom: 20px;">data-heist</h1>
-<img src="client/public/images/welcome.png" alt="Image" width="75%"/>
+<img src="client/public/welcome.png" alt="Image" width="75%"/>
 </p>
 
 

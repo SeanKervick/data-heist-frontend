@@ -12,6 +12,7 @@ import FeedbackPage from "./pages/FeedbackPage.tsx";
 import AdminPage from "./pages/AdminPage.tsx";
 import GameIntroPage from "./pages/GameIntroPage.tsx";
 import CodeExposed from "./pages/challenges/CodeExposedPage.tsx";
+import CertInspector from "./pages/challenges/CertInspectorPage.tsx";
 
 
 
@@ -31,6 +32,8 @@ const App = () => {
         <Route path="/feedback" element={<FeedbackPage />} />
         <Route path="/game-intro" element={<GameIntroPage />} />
         <Route path="/challenge/code-exposed" element={<CodeExposed />} />
+        <Route path="/challenge/cert-inspector" element={<CertInspector />} />
+
 
 
         {/* protected routes */}

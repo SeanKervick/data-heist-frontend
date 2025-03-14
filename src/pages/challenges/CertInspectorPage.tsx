@@ -1,15 +1,14 @@
 import React, { useState } from "react";
-import { Container, Typography, TextField, Button, Box, Card, CardContent, Avatar, Alert } from "@mui/material";
+import { Container, Typography, TextField, Button, Box, Avatar, Alert } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import DialogBox from "../../components/DialogBox";
-import { profile } from "../../components/Profiles";
 import Timer from "../../components/Timer";
 
 
-const PasswordCrackerChallenge = () => {
+const CertInspectorChallenge = () => {
   const navigate = useNavigate();
   // state variables
-  const [password, setPassword] = useState<string>("");
+  const [certificate, setCert] = useState<string>("");
   const [error, setError] = useState<string>("");
   const [success, setSuccess] = useState<boolean>(false); // for navigation control
   const [showDialog, setShowDialog] = useState<boolean>(true); // dialog box shown at start
@@ -26,7 +25,7 @@ const PasswordCrackerChallenge = () => {
     setError("");
     setSuccess(false);
 
-    if (password === profile.correctPassword) {
+    if (certificate === "b0047d0db3bd06499e6a3a509129860704967b66f083bcbabc03f767a43281d0" ) {
       setSuccess(true);
       setTimerStart(false); // stop the timer
 
@@ -37,7 +36,7 @@ const PasswordCrackerChallenge = () => {
       setShowDialog(true); // show dialog at end of this challenge
       
     } else {
-      setError("Incorrect password. Try again!"); // show error
+      setError("Incorrect. Try again!"); // show error
     }
   };
 
@@ -45,7 +44,7 @@ const PasswordCrackerChallenge = () => {
     setShowDialog(false);
     setTimerStart(true); // start timer
     if (success) {
-      navigate("/challenge/spot-the-phish"); // direct to next challenge
+      navigate("/challenge/next"); // direct to next challenge
     }
   };
 
@@ -56,18 +55,18 @@ const PasswordCrackerChallenge = () => {
 
 
   return (
-    <Container maxWidth="sm" sx={{ textAlign: "center", mt: 5 }}>
+    <Container sx={{ width: "95%", textAlign: "center", mt: 5 }}>
       {/* dialog box */}
       <DialogBox
         open={showDialog}
         title={
-          success ? `Challenge 1 Complete! You scored ${challengeScore} points!` : "Challenge 1: Password Cracker!"
+          success ? `Challenge 2 Complete! You scored ${challengeScore} points!` : "Challenge 2: Cert Inspector!"
         }
         // challenge explanation (shown at start) & educational message (shown at end)
         message={
           success
-            ? "Well done, you cracked the password! Although this task was easy, it highlights the importance of password strength and & keeping hints off social media."
-            : "Read this person's social media bio and guess their password."
+            ? "Well done! You've successfully retrieved the certificate's SHA-256 fingerprint. This fingerprint is used to verify a website's authenticity and prevent 'man-in-the-middle' attacks."
+            : "Inspect the digital certificate of the Data-Heist website and find its SHA-256 fingerprint. Enter the correct fingerprint to complete the challenge."
         }
         buttonText={success ? "next challenge" : "OK"}
         onClose={handleDialogClose}
@@ -76,37 +75,27 @@ const PasswordCrackerChallenge = () => {
       {!success && <Timer initialTime={30} onTimeUp={handleTimeUp} start={timerStart} onTimeUpdate={setTime} />}
 
       {/* profile card */}
-      <Card sx={{ p: 3, textAlign: "center" }}>
-        <CardContent>
+
           <Avatar
-            src={profile.profilePic}
+            src={"/images/cert-inspector1.png"}
             sx={{ width: 200, height: 200, margin: "auto" }}
           />
-          <Typography variant="h5" sx={{ mt: 2 }}>
-            {profile.name}
-          </Typography>
-          <Typography variant="subtitle1" color="text.secondary">
-            {profile.username}
-          </Typography>
-          <Typography variant="body1" sx={{ mt: 2, fontStyle: "italic" }}>
-            "{profile.bio}"
-          </Typography>
-        </CardContent>
-      </Card>
+
+
 
       {/* password form */}
       <Box
         component="form"
         onSubmit={handleSubmit}
-        sx={{ display: "flex", flexDirection: "column", gap: 2, mt: 3 }}
+        sx={{ display: "flex",   flexDirection: "column", gap: 2, mt: 3 }}
       >
-        <Typography variant="body1">enter the password:</Typography>
+        <Typography variant="body1">Enter data-heist's Certificate SHA-256 Fingerprint to complete this challenge:</Typography>
         <TextField
           type="text"
           variant="outlined"
           fullWidth
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
+          value={certificate}
+          onChange={(e) => setCert(e.target.value)}
           required
         />
         <Button type="submit" variant="contained" color="primary" fullWidth>
@@ -123,4 +112,4 @@ const PasswordCrackerChallenge = () => {
   );
 };
 
-export default PasswordCrackerChallenge;
+export default CertInspectorChallenge;

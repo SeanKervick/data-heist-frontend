@@ -116,7 +116,7 @@ const SpotThePhish = () => {
           {/* ------------------ email sender --------------------------*/}
           <Box
             sx={{ display: "flex", alignItems: "center", gap: 1, borderBottom: "1px solid ", pt: 2, pb: 2, }} >
-            <Avatar src={"../public/images/ao.png"} sx={{ width: 75, height: 75, mr: 5 }} />
+            <Avatar src={"/images/ao.png"} sx={{ width: 75, height: 75, mr: 5 }} />
             <Typography sx={{ fontFamily: "sans-serif" }} variant="body1">
               From: AIB Online
               <Typography
