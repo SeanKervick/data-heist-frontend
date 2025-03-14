@@ -76,9 +76,6 @@ const CertInspectorChallenge = () => {
           ) : (
             <Typography>
               Inspect the digital certificate of the Data-Heist website and find its SHA-256 fingerprint. Copy and paste in the fingerprint to complete the challenge."
-             <br />
-             <br />
-             <strong>!! MOBILE USERS WILL NEED TO USE THE LINK PROVIDED !!</strong>
            </Typography>
           )
         }
