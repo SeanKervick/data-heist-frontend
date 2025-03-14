@@ -44,7 +44,7 @@ const CertInspectorChallenge = () => {
     setShowDialog(false);
     setTimerStart(true); // start timer
     if (success) {
-      navigate("/challenge/next"); // direct to next challenge
+      navigate("/feedback"); // direct to next challenge
     }
   };
 
@@ -64,31 +64,48 @@ const CertInspectorChallenge = () => {
         }
         // challenge explanation (shown at start) & educational message (shown at end)
         message={
-          success
-            ? "Well done! You've successfully retrieved the certificate's SHA-256 fingerprint. This fingerprint is used to verify a website's authenticity and prevent 'man-in-the-middle' attacks."
-            : "Inspect the digital certificate of the Data-Heist website and find its SHA-256 fingerprint. Enter the correct fingerprint to complete the challenge."
+          success ? (
+            <>
+              <Typography>
+               Well done! You've successfully retrieved the certificate's SHA-256 fingerprint. 
+               This fingerprint is used to verify a website's authenticity and prevent 'man-in-the-middle' attacks."
+                <br />
+                <br />
+              </Typography>
+            </>
+          ) : (
+            <Typography>
+              Inspect the digital certificate of the Data-Heist website and find its SHA-256 fingerprint. Copy and paste in the fingerprint to complete the challenge."
+             <br />
+             <br />
+             <strong>!! MOBILE USERS WILL NEED TO USE THE LINK PROVIDED !!</strong>
+           </Typography>
+          )
         }
         buttonText={success ? "next challenge" : "OK"}
         onClose={handleDialogClose}
       />
       {/* timer not shown at end of challenge */}
-      {!success && <Timer initialTime={30} onTimeUp={handleTimeUp} start={timerStart} onTimeUpdate={setTime} />}
+      {!success && <Timer initialTime={30000} onTimeUp={handleTimeUp} start={timerStart} onTimeUpdate={setTime} />}
 
-      {/* profile card */}
+      {/* inspector image */}
+      <Avatar
+        src={"/images/cert-inspector.png"}
+        sx={{ width: 200, height: 200, margin: "auto" }}
+      />
 
-          <Avatar
-            src={"/images/cert-inspector.png"}
-            sx={{ width: 200, height: 200, margin: "auto" }}
-          />
-
-
-
-      {/* password form */}
+      {/* challenge form */}
       <Box
         component="form"
         onSubmit={handleSubmit}
         sx={{ display: "flex",   flexDirection: "column", gap: 2, mt: 3 }}
       >
+        <Typography variant="body1" color="red">
+          Mobile users will need this tool:{" "}
+          <a href="https://www.ssllabs.com/ssltest/" target="_blank" style={{ color: "blue", textDecoration: "underline" }}>
+            SSL Labs SSL Test
+          </a>
+        </Typography>
         <Typography variant="body1">Enter data-heist's Certificate SHA-256 Fingerprint to complete this challenge:</Typography>
         <TextField
           type="text"
