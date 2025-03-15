@@ -41,7 +41,7 @@ const CodeExposed = () => {
     setShowDialog(false);
     setTimerStart(true); // start timer
     if (success) {
-      navigate("/port-watcher"); // direct to next challenge
+      navigate("/challenge/port-watcher"); // direct to next challenge
     }
   };
 
