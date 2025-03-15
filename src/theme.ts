@@ -19,7 +19,7 @@ const darkTheme = createTheme({
     },
   },
   typography: {
-    fontFamily: "'Courier New', monospace", // hacker-style/matrix font
+    fontFamily: "Courier New", // hacker-style/matrix font
     fontSize: 14, // default text size
     h1: {
       fontSize: "5rem",

@@ -17,7 +17,7 @@ const CodeExposed = () => {
   // score keeping
   const [challengeScore, setChallengeScore] = useState<number>(0);
   const totalScore = Number(localStorage.getItem("totalScore"));
-  console.log(`C1 total score is: ${totalScore}`);
+  console.log(`C4 total score is: ${totalScore}`);
 
   const handleFlagClick = (id: number) => {
     // if foundFlags does not include the id of the clicked flag
@@ -41,7 +41,7 @@ const CodeExposed = () => {
     setShowDialog(false);
     setTimerStart(true); // start timer
     if (success) {
-      navigate("/feedback"); // direct to next challenge
+      navigate("/port-watcher"); // direct to next challenge
     }
   };
 
