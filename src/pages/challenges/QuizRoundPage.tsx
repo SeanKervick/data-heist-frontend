@@ -19,7 +19,8 @@ const QuizRound = () => {
   // score keeping
   const [challengeScore, setChallengeScore] = useState<number>(0);
   const totalScore = (Number(localStorage.getItem("totalScore")));
-  console.log(`C3 total score is: ${totalScore}`);
+  // debugging
+  console.log(`C1 - Quiz total score is: ${totalScore}`);
 
 
   const handleAnswerClick = (index: number) => {
@@ -53,7 +54,7 @@ const QuizRound = () => {
     setShowDialog(false);
     setTimerStart(true); // start timer
     if (success) {
-      navigate("/feedback"); // direct to feedback page
+      navigate("/challenge/spot-the-phish"); // direct to feedback page
     }
   };
 
@@ -68,7 +69,7 @@ const handleTimeUp = () => {
             {/* ------------------ dialog box --------------------------*/}
             <DialogBox
             open={showDialog}
-            title={success ? `Challenge 3 Complete! You scored ${challengeScore} points!` : "Challenge 3: Quiz Round!"}
+            title={success ? `Challenge 1 Complete! You scored ${challengeScore} points!` : "Challenge 1: Quiz Round!"}
             // challenge explanation (shown at start) & educational message (shown at end)
             message={
               success ? (
@@ -81,14 +82,14 @@ const handleTimeUp = () => {
                 </>
               ) : (
                 <Typography>
-                "Answer the questions as quickly as possible to secure the most points!"
+                Answer the questions as quickly as possible to secure the most points!
                 <br />
                 <br />
-                (Extra 10 points for each correct answer)
+                (10 bonus points for each correct answer)
                 </Typography>
               )
             }
-            buttonText={success ? "end game" : "OK"}
+            buttonText={success ? "next challenge" : "OK"}
             onClose={handleDialogClose}
           />
 

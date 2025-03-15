@@ -41,7 +41,7 @@ const CodeExposed = () => {
     setShowDialog(false);
     setTimerStart(true); // start timer
     if (success) {
-      navigate("/challenge/cert-inspector"); // direct to next challenge
+      navigate("/feedback"); // direct to next challenge
     }
   };
 
@@ -57,8 +57,8 @@ const CodeExposed = () => {
         open={showDialog}
         title={
           success
-            ? `Challenge 1 Complete! You scored ${challengeScore} points!`
-            : "Challenge 1: CodeExposed!"
+            ? `Challenge 4 Complete! You scored ${challengeScore} points!`
+            : "Challenge 4: CodeExposed!"
         }
         // challenge explanation (shown at start) & educational message (shown at end)
         message={

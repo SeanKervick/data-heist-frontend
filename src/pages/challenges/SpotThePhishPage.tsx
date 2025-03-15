@@ -44,7 +44,7 @@ const SpotThePhish = () => {
     setShowDialog(false);
     setTimerStart(true); // start timer
     if (success) {
-      navigate("/challenge/quiz"); // direct to next challenge
+      navigate("/challenge/cert-inspector"); // direct to next challenge
     }
   };
 
@@ -64,7 +64,7 @@ const SpotThePhish = () => {
           success ? (
             <>
               <Typography>
-                Well done, you found 3 red flags common in Phishing emails!
+                Well done, you found 3 red flags common in Phishing emails:
                 <br />
                 <br />
               </Typography>

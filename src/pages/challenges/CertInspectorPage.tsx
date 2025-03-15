@@ -44,7 +44,7 @@ const CertInspectorChallenge = () => {
     setShowDialog(false);
     setTimerStart(true); // start timer
     if (success) {
-      navigate("/feedback"); // direct to next challenge
+      navigate("/challenge/code-exposed"); // direct to next challenge
     }
   };
 
@@ -60,7 +60,7 @@ const CertInspectorChallenge = () => {
       <DialogBox
         open={showDialog}
         title={
-          success ? `Challenge 2 Complete! You scored ${challengeScore} points!` : "Challenge 2: Cert Inspector!"
+          success ? `Challenge 3 Complete! You scored ${challengeScore} points!` : "Challenge 3: Cert Inspector!"
         }
         // challenge explanation (shown at start) & educational message (shown at end)
         message={
@@ -68,7 +68,7 @@ const CertInspectorChallenge = () => {
             <>
               <Typography>
                Well done! You've successfully retrieved the certificate's SHA-256 fingerprint. 
-               This fingerprint is used to verify a website's authenticity and prevent 'man-in-the-middle' attacks."
+               This fingerprint is used to verify a website's authenticity and prevent 'man-in-the-middle' attacks.
                 <br />
                 <br />
               </Typography>
@@ -98,9 +98,9 @@ const CertInspectorChallenge = () => {
         sx={{ display: "flex",   flexDirection: "column", gap: 2, mt: 3 }}
       >
         <Typography variant="body1" color="red">
-          Mobile users will need this tool:{" "}
+          Tool for mobile users:{" "}
           <a href="https://www.ssllabs.com/ssltest/" target="_blank" style={{ color: "blue", textDecoration: "underline" }}>
-            SSL Labs SSL Test
+            SSL Server Test
           </a>
         </Typography>
         <Typography variant="body1">Enter data-heist's Certificate SHA-256 Fingerprint to complete this challenge:</Typography>
