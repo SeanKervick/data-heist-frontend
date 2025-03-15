@@ -22,7 +22,7 @@ const Timer: React.FC<TimerProps> = ({ initialTime, start, onTimeUp, onTimeUpdat
   }, [initialTime, time, start, onTimeUpdate, onTimeUp]); // useEffect dependencies
 
   // display time remaining in challenge
-  return <Typography>Time Left: {time}s</Typography>;
+  return <Typography color="red">Time Left: {time}s</Typography>;
 };
 
 export default Timer;
