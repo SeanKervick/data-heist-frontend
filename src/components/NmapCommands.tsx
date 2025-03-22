@@ -145,7 +145,7 @@ const storedCommands: Record<string, string> = {
         ipconfig - to identify the network
         ping google.com - send a ping request to google.com
         nmap -h - help
-        nmap -sP 192.168.XX.0/24 - ping all devices (replace X's to match the network IP address found in Step 1)`,
+        nmap -sn 192.168.XX.0/24 - ping all devices (replace X's to match the network IP address found in Step 1)`,
   };
   
   export default storedCommands;

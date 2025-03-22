@@ -25,7 +25,13 @@ const CertInspectorChallenge = () => {
     setError("");
     setSuccess(false);
 
-    if (certificate === "b0047d0db3bd06499e6a3a509129860704967b66f083bcbabc03f767a43281d0" ) {
+    if (
+      certificate === "Sunday, May 18, 2025 at 6:02:06 PM" || 
+      certificate === "Sunday, May 18, 2025" ||
+      certificate === "18/05/2025" ||
+      certificate === "Sun, 18 May 2025 17:02:06 UTC" || // SSL Labs
+      certificate === "Sun, 18 May 2025" // SSL Labs
+    ) {
       setSuccess(true);
       setTimerStart(false); // stop the timer
 
@@ -36,7 +42,7 @@ const CertInspectorChallenge = () => {
       setShowDialog(true); // show dialog at end of this challenge
       
     } else {
-      setError("Incorrect. Try again!"); // show error
+      setError("Incorrect. Try again! Date format: DD/MM/YYYY"); // show error
     }
   };
 
@@ -67,15 +73,15 @@ const CertInspectorChallenge = () => {
           success ? (
             <>
               <Typography>
-               Well done! You've successfully retrieved the certificate's SHA-256 fingerprint. 
-               This fingerprint is used to verify a website's authenticity and prevent 'man-in-the-middle' attacks.
+               Well done! You've successfully retrieved the certificate's expiry date. 
+               This digital certificate is used to verify a website's authenticity and prevent 'man-in-the-middle' attacks.
                 <br />
                 <br />
               </Typography>
             </>
           ) : (
             <Typography>
-              Inspect the digital certificate of the Data-Heist website and find its SHA-256 fingerprint. Copy and paste in the fingerprint to complete the challenge."
+              Inspect the digital certificate of the Data-Heist website and find its expiry date. Enter the date into the form box to complete this challenge.
            </Typography>
           )
         }
@@ -83,7 +89,7 @@ const CertInspectorChallenge = () => {
         onClose={handleDialogClose}
       />
       {/* timer not shown at end of challenge */}
-      {!success && <Timer initialTime={30000} onTimeUp={handleTimeUp} start={timerStart} onTimeUpdate={setTime} />}
+      {!success && <Timer initialTime={100} onTimeUp={handleTimeUp} start={timerStart} onTimeUpdate={setTime} />}
 
       {/* inspector image */}
       <Avatar
@@ -95,7 +101,7 @@ const CertInspectorChallenge = () => {
       <Box
         component="form"
         onSubmit={handleSubmit}
-        sx={{ display: "flex",   flexDirection: "column", gap: 2, mt: 3 }}
+        sx={{ maxWidth: "500px", display: "flex",   flexDirection: "column", gap: 2, mt: 3 }}
       >
         <Typography variant="body1" color="red">
           Tool for mobile users:{" "}
@@ -103,7 +109,7 @@ const CertInspectorChallenge = () => {
             SSL Server Test
           </a>
         </Typography>
-        <Typography variant="body1">Enter data-heist's Certificate SHA-256 Fingerprint to complete this challenge:</Typography>
+        <Typography variant="body1">Enter the expiry date of data-heist's Digital Certificate to complete this challenge:</Typography>
         <TextField
           type="text"
           variant="outlined"
@@ -117,11 +123,13 @@ const CertInspectorChallenge = () => {
         </Button>
       </Box>
       {/* conditional rendering - if error (true) then render the alert (https://react.dev/learn/conditional-rendering) */}
-      {error && (
-        <Alert severity="error" sx={{ mt: 2 }}>
-          {error}
-        </Alert>
-      )}
+      <Typography sx={{ textAlign: "left", whiteSpace: "pre-line" }}>
+        {error && (
+          <Alert severity="error" sx={{ mt: 2 }}>
+            {error}
+          </Alert>
+        )}
+      </Typography>
     </Container>
   );
 };
