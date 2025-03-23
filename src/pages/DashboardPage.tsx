@@ -1,6 +1,8 @@
 import { Button, Container, Typography } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
+import { Link } from "react-router-dom";
+
 
 const DashboardPage = () => {
   const navigate = useNavigate();
@@ -18,6 +20,11 @@ const DashboardPage = () => {
         welcome {username}!
       </Typography>
       <Typography>you are now logged in.</Typography>
+      <Link to="/challenge/quiz">
+          <Button variant="contained" color="primary">
+            Play
+          </Button>
+        </Link>
       <Button variant="contained" color="secondary" onClick={handleLogout} sx={{ mt: 3 }}>
         logout
       </Button>

@@ -46,7 +46,7 @@ const PortWatcher = () => {
           setStep(2);
         } else if (step === 2 && inputCommand === "nmap -sn 192.168.10.0/24") {
           terminalOutput = storedCommands[inputCommand] || terminalOutput;
-          nextGuide = `Great! We've found 7 active hosts. Now scan for common open ports like HTTP (80) and 
+          nextGuide = `Great! You've found 7 active hosts (see below). Now scan for common open ports like HTTP (80) and 
           HTTPS (443) using -p 80,443 to find potentially vulnerable services.`;
           setHint("");
           setStep(3);

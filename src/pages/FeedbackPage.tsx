@@ -1,20 +1,33 @@
 import { Button, Container, Typography } from "@mui/material";
 import { useNavigate } from "react-router-dom";
+import { updateHighScore } from "../api/scoreAPI";
+import { useState } from "react";
+
 
 
 const FeedbackPage = () => {
   const navigate = useNavigate();
   const finalScore = Number(localStorage.getItem("totalScore")) ;
+  const [username] = useState(localStorage.getItem("username"));
+  
 
   const handleEndGame = () => {
+    // check if user is logged in before saving score
+    const isLoggedIn = !!localStorage.getItem("token");
+    if (isLoggedIn) {
+      updateHighScore(finalScore);
+      navigate("/dashboard"); // redirect to dashboard
+      localStorage.removeItem("totalScore"); // reset score after game ends
+    }
+
     localStorage.removeItem("totalScore"); // reset score after game ends
-    navigate("/"); // redirect to homepage
+    navigate("/"); // redirect to home if not logged in
   };
 
   return (
     <Container sx={{ textAlign: "center", mt: 5 }}>
       <Typography variant="h4" gutterBottom>
-        Well done! Your total score is {finalScore}
+        Well done {username}! <br></br><br></br> Your total score is:<br></br> {finalScore}
       </Typography>
       <Button 
         variant="contained" 
@@ -22,7 +35,7 @@ const FeedbackPage = () => {
         onClick={handleEndGame} 
         sx={{ mt: 3 }}
       >
-        Home
+        dashboard
       </Button>
     </Container>
   );
