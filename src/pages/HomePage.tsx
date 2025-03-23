@@ -26,7 +26,10 @@ const Homepage = () => {
         <Button 
           variant="contained"
           color="primary"
-          onClick={() => { localStorage.removeItem("totalScore"); }} // reset score on new game
+          onClick={() => {
+            localStorage.removeItem("totalScore"); // reset score on new game
+            localStorage.removeItem("username"); // clear username if playing as guest
+          }}
         >
           continue as guest
         </Button>

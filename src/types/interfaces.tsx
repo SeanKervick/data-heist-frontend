@@ -23,3 +23,9 @@ export interface DialogBoxProps {
     username: string;
     email: string;
   }
+
+  export interface LeaderboardUser {
+    _id: string;
+    username: string;
+    score: number;
+  }

@@ -16,12 +16,12 @@ const FeedbackPage = () => {
     const isLoggedIn = !!localStorage.getItem("token");
     if (isLoggedIn) {
       updateHighScore(finalScore);
-      navigate("/dashboard"); // redirect to dashboard
       localStorage.removeItem("totalScore"); // reset score after game ends
     }
 
     localStorage.removeItem("totalScore"); // reset score after game ends
-    navigate("/"); // redirect to home if not logged in
+    // redirect to dashboard (only logged in user's, guests will be directed to login)
+    navigate("/dashboard");
   };
 
   return (

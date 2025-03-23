@@ -58,9 +58,12 @@ const PortWatcher = () => {
           setStep(4);
         } else if (step === 4 && inputCommand === "nmap -sV -p 80,443 192.168.10.1" ) {
           terminalOutput = storedCommands[inputCommand] || terminalOutput;
-          nextGuide = `Excellent! You've identified that the router is running Apache httpd 2.4.49. 
+          nextGuide = `Congratulations! You've identified that the router is running Apache httpd 2.4.49. 
           This version is outdated and has known vulnerabilities, making it a potential security risk.`;
+          setStep(5);
           setHint("");
+          setShowHintButton(false);
+
 
           // challenge complete
           setSuccess(true);
@@ -72,7 +75,7 @@ const PortWatcher = () => {
     
           setTimeout(() => {
             setShowDialog(true);  // show dialog at end of this challenge
-          }, 5000); 
+          }, 10000); 
 
         }
 
@@ -124,7 +127,7 @@ const PortWatcher = () => {
           success ? (
             <>
               <Typography>
-                Congratulation! You've successfully scanned the network,
+                Great job! You've successfully scanned the network,
                 identified active hosts, checked for open ports, and discovered
                 outdated services running. This process is a key part of ethical
                 hacking and penetration testing!
@@ -145,40 +148,45 @@ const PortWatcher = () => {
         {/*--------- challenge card ------------*/}
         <Card sx={{ color: "primary", pt: 3}}>
           {/*--------- step guidance ------------*/}
+
           <Box sx={{ maxWidth: "1000px", p: 2, pb: 0 }}>
             <Typography  sx={{ textAlign: "left" }}>Step {step}: {guideResponse}</Typography>
           </Box>
-          {/*--------- tip, timer, hint button ------------*/}
-          <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center", pl: 2, pr: 2 }}>
-              {/*--------- tip ------------*/}
-            <Box>
-              <Typography color="red">(Tip: use 'nmap -h' for help)</Typography>
-            </Box>
-            {/*--------- timer ------------*/}
-            <Box sx={{ flex: 1, textAlign: "center" }}>
-              {!success && (
-                <Timer
-                  initialTime={100}
-                  onTimeUp={handleTimeUp}
-                  start={timerStart}
-                  onTimeUpdate={setTime}
-                />
-              )}
-            </Box>
-            {/*--------- hint button ------------*/}
-            <Box sx={{ flex: 1, textAlign: "right", display: "flex", justifyContent: "flex-end" }}>
-              {showHintButton && (
-                <Button
-                  variant="contained"
-                  sx={{ height: "1rem", fontSize: "0.75rem" }}
-                  onClick={handleHintClick}
-                >
-                  hint
-                </Button>
-              )}
-              <Typography sx={{  display: "inline", ml: 2 }}>{hint}</Typography>
-            </Box>
-          </Box>
+          {step < 5 && (
+            <>
+              {/*--------- tip, timer, hint button ------------*/}
+              <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center", pl: 2, pr: 2 }}>
+                  {/*--------- tip ------------*/}
+                <Box>
+                  <Typography color="red">(Tip: use 'nmap -h' for help)</Typography>
+                </Box>
+                {/*--------- timer ------------*/}
+                <Box sx={{ flex: 1, textAlign: "center" }}>
+                  {!success && (
+                    <Timer
+                      initialTime={100}
+                      onTimeUp={handleTimeUp}
+                      start={timerStart}
+                      onTimeUpdate={setTime}
+                    />
+                  )}
+                </Box>
+                {/*--------- hint button ------------*/}
+                <Box sx={{ flex: 1, textAlign: "right", display: "flex", justifyContent: "flex-end" }}>
+                  {showHintButton && (
+                    <Button
+                      variant="contained"
+                      sx={{ height: "1rem", fontSize: "0.75rem" }}
+                      onClick={handleHintClick}
+                    >
+                      hint
+                    </Button>
+                  )}
+                  <Typography sx={{  display: "inline", ml: 2 }}>{hint}</Typography>
+                </Box>
+              </Box>
+          </>
+        )}
         {/*--------- terminal ------------*/}
         <CardContent>
           <Box sx={{
