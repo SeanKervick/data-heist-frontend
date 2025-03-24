@@ -18,7 +18,7 @@ const SignUpPage = () => {
 
     // backend api call
     try {
-      const response = await axios.post("https://data-heist-backend.onrender.com", formData); // https://data-heist-backend.onrender.com replace after testing locally http://localhost:5000/api/signup
+      const response = await axios.post("https://data-heist-backend.onrender.com/api/signup", formData); // https://data-heist-backend.onrender.com replace after testing locally http://localhost:5000/api/signup
       
       console.log("account created successfully:", response.data);
       localStorage.setItem("token", response.data.token); // store JWT token locally in the browswer

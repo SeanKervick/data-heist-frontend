@@ -75,7 +75,7 @@ const PortWatcher = () => {
     
           setTimeout(() => {
             setShowDialog(true);  // show dialog at end of this challenge
-          }, 10000); 
+          }, 15000); 
 
         }
 
