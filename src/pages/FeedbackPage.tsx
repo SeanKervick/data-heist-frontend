@@ -15,6 +15,7 @@ const FeedbackPage = () => {
     // check if user is logged in before saving score
     const isLoggedIn = !!localStorage.getItem("token");
     if (isLoggedIn) {
+      // pass finalScore to api endpoint
       updateHighScore(finalScore);
       localStorage.removeItem("totalScore"); // reset score after game ends
     }
