@@ -3,7 +3,6 @@ import { useState } from "react";
 import storedCommands from "../../components/NmapCommands.tsx";
 import { useNavigate } from "react-router-dom";
 import DialogBox from "../../components/DialogBox";
-import Timer from "../../components/Timer";
 
 const PortWatcher = () => {
   const navigate = useNavigate();
@@ -17,9 +16,8 @@ const PortWatcher = () => {
 
   const [success, setSuccess] = useState<boolean>(false); // for navigation control
   const [showDialog, setShowDialog] = useState<boolean>(true); // dialog box shown at start
-  // timer control
-  const [timerStart, setTimerStart] = useState<boolean>(false);
-  const [time, setTime] = useState<number>(0);
+  // points control
+  const [points, setPoints] = useState<number>(100);
   // score keeping
   const [challengeScore, setChallengeScore] = useState<number>(0);
   const totalScore = (Number(localStorage.getItem("totalScore")));
@@ -40,8 +38,8 @@ const PortWatcher = () => {
         // step-based guidance through scan
         if (step === 1 && inputCommand === "ipconfig") {
           terminalOutput = storedCommands[inputCommand] || terminalOutput;
-          nextGuide = `Well done! Now, use the information below (from the 'ipconfig' response)
-           to PING ALL DEVICES on the network to discover active hosts.`;
+          nextGuide = `Well done! The IPv4 address and Subnet Mask found below, determines that the network range is 192.168.10.0/24. 
+          Use this range to PING ALL DEVICES on the network and discover active hosts.`;
           setHint("");
           setStep(2);
         } else if (step === 2 && inputCommand === "nmap -sn 192.168.10.0/24") {
@@ -52,8 +50,8 @@ const PortWatcher = () => {
           setStep(3);
         } else if (step === 3 && inputCommand === "nmap -p 80,443 192.168.10.0/24") {
           terminalOutput = storedCommands[inputCommand] || terminalOutput;
-          nextGuide = `Nice work! Now analyze the devices below, and choose one with open ports for a SERVICE DETECTION SCAN. 
-          Knowing the software behind these ports may present vulnerablities to exploit!`;
+          nextGuide = `Nice work! Ports 80 & 443 on gateway.local (192.168.10.1) are open. 
+          Run a SERVICE DETECTION SCAN on this device to identify the software — it may reveal exploitable vulnerabilities!`;
           setHint("");
           setStep(4);
         } else if (step === 4 && inputCommand === "nmap -sV -p 80,443 192.168.10.1" ) {
@@ -67,10 +65,9 @@ const PortWatcher = () => {
 
           // challenge complete
           setSuccess(true);
-          setTimerStart(false); // stop the timer
     
-          setChallengeScore(time); // update state for end of challenge dialog box UI
-          const updatedTotal = totalScore + time; // calculate total score
+          setChallengeScore(points); // update state for end of challenge dialog box UI
+          const updatedTotal = totalScore + points; // calculate total score
           localStorage.setItem("totalScore", (updatedTotal).toString()); // store updated total score
     
           setTimeout(() => {
@@ -88,19 +85,14 @@ const PortWatcher = () => {
 
   const handleDialogClose = () => {
     setShowDialog(false);
-    setTimerStart(true); // start timer
     if (success) {
       navigate("/feedback"); // direct to next challenge
     }
   };
 
-  const handleTimeUp = () => {
-    console.log("time's up");
-    // handle action when time runs out here
-  };
-
   const handleHintClick = () => {
     setShowHintButton(false);
+    setPoints(points - 15)
     if (step === 1) {
       setHint("Command: ipconfig")
     } else if (step === 2) {
@@ -135,9 +127,12 @@ const PortWatcher = () => {
               </Typography>
             </>
           ) : (
-            <Typography>
-              Take on the role of an 'ethical hacker' and carry out a
-              vulnerability scan on a public network using nmap.
+            <Typography textAlign="left">
+              Become an <strong>ethical hacker</strong> and carry out a
+              vulnerability scan on a public network using 'nmap', a network scanning tool.<br/><br />
+
+              For this challenge, there is no time limit - but each hint you use will deduct <strong>15 points</strong> from your score.<br/>
+              Use the command '<code>nmap -h</code>' for help and clues to find the right command to enter into the terminal. Good luck!
             </Typography>
           )
         }
@@ -150,7 +145,7 @@ const PortWatcher = () => {
           {/*--------- step guidance ------------*/}
 
           <Box sx={{ maxWidth: "1000px", p: 2, pb: 0 }}>
-            <Box sx={{ display: "flex", alignItems: "center", textAlign: "left" }}>
+            <Box sx={{ alignItems: "center", textAlign: "left" }}>
               {step < 5 && (
                 <Typography sx={{ display: "inline" }}>
                   Step {step}/4:&nbsp;
@@ -161,41 +156,36 @@ const PortWatcher = () => {
               </Typography>
             </Box>
           </Box>
+          {/*--------- tip, points, hint button ------------*/}
+          <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center", pl: 2, pr: 2 }}>
+          {/*--------- tip ------------*/}
           {step < 5 && (
-            <>
-              {/*--------- tip, timer, hint button ------------*/}
-              <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center", pl: 2, pr: 2 }}>
-                  {/*--------- tip ------------*/}
-                <Box>
-                  <Typography color="red">(Tip: use 'nmap -h' for help)</Typography>
-                </Box>
-                {/*--------- timer ------------*/}
-                <Box sx={{ flex: 1, textAlign: "center" }}>
-                  {!success && (
-                    <Timer
-                      initialTime={100}
-                      onTimeUp={handleTimeUp}
-                      start={timerStart}
-                      onTimeUpdate={setTime}
-                    />
-                  )}
-                </Box>
-                {/*--------- hint button ------------*/}
-                <Box sx={{ flex: 1, textAlign: "right", display: "flex", justifyContent: "flex-end" }}>
-                  {showHintButton && (
-                    <Button
-                      variant="contained"
-                      sx={{ height: "1rem", fontSize: "0.75rem" }}
-                      onClick={handleHintClick}
-                    >
-                      hint
-                    </Button>
-                  )}
-                  <Typography sx={{  display: "inline", ml: 2 }}>{hint}</Typography>
-                </Box>
+            <Box>
+              <Typography color="red">'nmap -h' for help on each step</Typography>
+            </Box>
+          )}
+          {/*--------- points ------------*/}
+          <Box sx={{ flex: 1, textAlign: "center" }}>
+            <Typography>
+              Points: {points}
+            </Typography>
+            </Box>
+            {/*--------- hint button ------------*/}
+            {step < 5 && (
+              <Box sx={{ flex: 1, textAlign: "right", display: "flex", justifyContent: "flex-end" }}>
+                {showHintButton && (
+                  <Button
+                    variant="contained"
+                    sx={{ height: "1rem", fontSize: "0.75rem" }}
+                    onClick={handleHintClick}
+                  >
+                    hint
+                  </Button>
+                )}
+                <Typography sx={{  display: "inline", ml: 2 }}>{hint}</Typography>
               </Box>
-          </>
-        )}
+            )}
+          </Box>
         {/*--------- terminal ------------*/}
         <CardContent>
           <Box sx={{

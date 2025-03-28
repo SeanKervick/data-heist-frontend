@@ -124,14 +124,14 @@ const storedCommands: Record<string, string> = {
 
         HOST DISCOVERY:
         -sL: List Scan - simply list targets to scan
-        -sn: Ping Scan
+        nmap -sn <target-network-range> - Ping Scan on All Devices
 
         SCAN TECHNIQUES:
         -sS/sT/sA/sW/sM: TCP SYN/Connect()/ACK/Window/Maimon scans
 
         PORT SPECIFICATION AND SCAN ORDER:
         -p <port ranges>: Only scan specified ports
-            Example: -p 80,443 192.168.10.0/24
+            Example: nmap -p xx,xxx 192.168.10.0/24
 
         SERVICE/VERSION DETECTION:
         -sV: Probe open ports to determine service/version info
@@ -140,12 +140,10 @@ const storedCommands: Record<string, string> = {
         OS DETECTION:
         -O: Enable OS detection
 
-        EXAMPLE COMMANDS:
+        OTHER COMMANDS:
         clear - clean the terminal
-        ipconfig - to identify the network
         ping google.com - send a ping request to google.com
-        nmap -h - help
-        nmap -sn 192.168.XX.0/24 - ping all devices (replace X's to match the network IP address found in Step 1)`,
+        nmap -h - help`,
   };
   
   export default storedCommands;
