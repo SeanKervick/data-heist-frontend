@@ -150,7 +150,16 @@ const PortWatcher = () => {
           {/*--------- step guidance ------------*/}
 
           <Box sx={{ maxWidth: "1000px", p: 2, pb: 0 }}>
-            <Typography  sx={{ textAlign: "left" }}>Step {step}: {guideResponse}</Typography>
+            <Box sx={{ display: "flex", alignItems: "center", textAlign: "left" }}>
+              {step < 5 && (
+                <Typography sx={{ display: "inline" }}>
+                  Step {step}/4:&nbsp;
+                </Typography>
+              )}
+              <Typography sx={{ display: "inline" }}>
+                {guideResponse}
+              </Typography>
+            </Box>
           </Box>
           {step < 5 && (
             <>

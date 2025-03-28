@@ -29,7 +29,7 @@ const AdminPage = () => {
     // backend api call to list all users
     try {
       const token = localStorage.getItem("token");
-      const response = await axios.get("https://data-heist-backend.onrender.com/api/users", {
+      const response = await axios.get("https://data-heist-backend.onrender.com", { //http://localhost:5000/ https://data-heist-backend.onrender.com
         headers: { Authorization: `Bearer ${token}` }, 
       });
       setUsers(response.data); // setUsers to response of API call
@@ -43,7 +43,7 @@ const AdminPage = () => {
     // backend api call to delete all users
     try {
       const token = localStorage.getItem("token");
-      const response = await axios.delete("https://data-heist-backend.onrender.com/api/users", {
+      const response = await axios.delete("https://data-heist-backend.onrender.com", {
         headers: { Authorization: `Bearer ${token}` }, 
       });
       setUsers(response.data); 

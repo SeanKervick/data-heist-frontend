@@ -18,7 +18,7 @@ const LoginPage = () => {
 
     // backend api call
     try {
-      const response = await axios.post("https://data-heist-backend.onrender.com/api/login", formData); // https://data-heist-backend.onrender.com replace after testing locally http://localhost:5000
+      const response = await axios.post("https://data-heist-backend.onrender.com", formData); // https://data-heist-backend.onrender.com replace after testing locally http://localhost:5000
   
       console.log("Login successful:", response.data);
   
