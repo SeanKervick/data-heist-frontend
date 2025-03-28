@@ -29,7 +29,7 @@ const AdminPage = () => {
     // backend api call to list all users
     try {
       const token = localStorage.getItem("token");
-      const response = await axios.get("https://data-heist-backend.onrender.com", { //http://localhost:5000/ https://data-heist-backend.onrender.com
+      const response = await axios.get("http://localhost:5000/api/users", { //http://localhost:5000/api/users https://data-heist-backend.onrender.com
         headers: { Authorization: `Bearer ${token}` }, 
       });
       setUsers(response.data); // setUsers to response of API call
@@ -43,15 +43,35 @@ const AdminPage = () => {
     // backend api call to delete all users
     try {
       const token = localStorage.getItem("token");
-      const response = await axios.delete("https://data-heist-backend.onrender.com", {
+      const response = await axios.delete("http://localhost:5000/api/users", {
         headers: { Authorization: `Bearer ${token}` }, 
       });
-      setUsers(response.data); 
+      setUsers(response.data);
       console.log("users deleted successfully:");
     } catch (error) {
       console.error("error deleting users:", error);
     }
   };
+
+  const handleDeleteUser = async (userId: string) => {
+    try {
+      const token = localStorage.getItem("token");
+      // delete user by ID
+      await axios.delete(`http://localhost:5000/api/users/${userId}`, {
+        headers: { Authorization: `Bearer ${token}` }, 
+      });
+      // list updated users after delete
+      const response = await axios.get(`http://localhost:5000/api/users`, {
+        headers: { Authorization: `Bearer ${token}` }, 
+      });
+      setUsers(response.data);
+      console.log(`user deleted successfully: ${userId}`);
+    } catch (err) {
+      console.error("Failed to delete user", err);
+    }
+  };
+  
+  
 
   return (
     <Container sx={{ textAlign: "center", mt: 5 }}>
@@ -75,6 +95,13 @@ const AdminPage = () => {
           {users.map((user, index) => (
             <ListItem key={index}>
               <ListItemText primary={`${user.username} (${user.email})`} />
+              <Button
+                  color="error"
+                  size="small"
+                  onClick={() => handleDeleteUser(user._id)}
+                >
+                  Delete
+                </Button>
             </ListItem>
           ))}
         </List>
