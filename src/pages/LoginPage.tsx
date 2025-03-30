@@ -19,7 +19,7 @@ const LoginPage = () => {
 
     // backend api call
     try {
-      const response = await axios.post(`${import.meta.env.API_URL}/api/login`, formData);
+      const response = await axios.post(`${import.meta.env.VITE_API_URL}/api/login`, formData);
   
       console.log("Login successful:", response.data);
   
@@ -27,8 +27,7 @@ const LoginPage = () => {
       localStorage.setItem("token", response.data.token);
       localStorage.setItem("username", response.data.username); // save username for UI
       localStorage.setItem("role", response.data.role); // save role for access control
-  
-
+      setError(null);
       setDelayMessage("Login may take a minute (or two) while the backend server wakes up due to the free tier delay. Thanks for waiting!");
       setTimeout(() => {
         // redirect based on role
@@ -37,7 +36,7 @@ const LoginPage = () => {
         } else {
           navigate("/dashboard");
         }
-        }, 8000)
+        }, 4000)
   
     } catch (error) {
       setError("Incorrect email or password. Please try again.");

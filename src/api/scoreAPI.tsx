@@ -7,7 +7,7 @@ export const updateHighScore = async (score: number) => {
   const username = localStorage.getItem("username");
 
   await axios.post(
-    `${import.meta.env.API_URL}/api/update-score`, // post api route to update user's score
+    `${import.meta.env.VITE_API_URL}/api/update-score`, // post api route to update user's score
     { score, username },
     {
       headers: { Authorization: `Bearer ${token}` },
@@ -16,6 +16,6 @@ export const updateHighScore = async (score: number) => {
 };
 
 export const getLeaderboard = async () => {
-  const { data } = await axios.get(`${import.meta.env.API_URL}/api/leaderboard`); // call api route for fetching leaderboard
+  const { data } = await axios.get(`${import.meta.env.VITE_API_URL}/api/leaderboard`); // call api route for fetching leaderboard
   return data;
 };

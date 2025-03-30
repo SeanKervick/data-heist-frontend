@@ -29,7 +29,7 @@ const AdminPage = () => {
     // backend api call to list all users
     try {
       const token = localStorage.getItem("token");
-      const response = await axios.get(`${import.meta.env.API_URL}/api/users`, {
+      const response = await axios.get(`${import.meta.env.VITE_API_URL}/api/users`, {
         headers: { Authorization: `Bearer ${token}` }, 
       });
       setUsers(response.data); // setUsers to response of API call
@@ -43,7 +43,7 @@ const AdminPage = () => {
     // backend api call to delete all users
     try {
       const token = localStorage.getItem("token");
-      const response = await axios.delete(`${import.meta.env.API_URL}/api/users`, {
+      const response = await axios.delete(`${import.meta.env.VITE_API_URL}/api/users`, {
         headers: { Authorization: `Bearer ${token}` }, 
       });
       setUsers(response.data);
@@ -59,11 +59,11 @@ const AdminPage = () => {
       const token = localStorage.getItem("token");
 
       // delete user by ID
-      await axios.delete(`${import.meta.env.API_URL}/api/users/${userId}`, {
+      await axios.delete(`${import.meta.env.VITE_API_URL}/api/users/${userId}`, {
         headers: { Authorization: `Bearer ${token}` }, 
       });
       // list updated users after delete
-      const response = await axios.get(`${import.meta.env.API_URL}/api/users`, {
+      const response = await axios.get(`${import.meta.env.VITE_API_URL}/api/users`, {
         headers: { Authorization: `Bearer ${token}` }, 
       });
       setUsers(response.data);

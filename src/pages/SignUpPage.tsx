@@ -19,7 +19,7 @@ const SignUpPage = () => {
 
     // backend api call
     try {
-      const response = await axios.post(`${import.meta.env.API_URL}/api/signup`, formData);
+      const response = await axios.post(`${import.meta.env.VITE_API_URL}/api/signup`, formData);
       
       console.log("account created successfully:", response.data);
       localStorage.setItem("token", response.data.token); // store JWT token locally in the browswer
@@ -28,7 +28,7 @@ const SignUpPage = () => {
       setDelayMessage("Sign-up may take a minute (or two) while the backend server wakes up due to the free tier delay. Thanks for waiting!");
       setTimeout(() => {
         navigate("/dashboard"); // redirect to dashboard
-      }, 8000)
+      }, 4000)
 
     } catch (error) {
       console.error("signup error frontend:", error);
