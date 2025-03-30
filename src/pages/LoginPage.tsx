@@ -7,6 +7,7 @@ const LoginPage = () => {
   const [formData, setFormData] = useState({ email: "", password: "" });
   const navigate = useNavigate(); // React Router useNavigate hook stored in a variable
   const [error, setError] = useState<string | null>(null); // stores error message
+  const [delayMessage, setDelayMessage] = useState<string | null>(null);
 
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => { // type of event object specified
@@ -18,7 +19,7 @@ const LoginPage = () => {
 
     // backend api call
     try {
-      const response = await axios.post("http://localhost:5000/api/login", formData); // https://data-heist-backend.onrender.com replace after testing locally http://localhost:5000
+      const response = await axios.post(`${import.meta.env.API_URL}/api/login`, formData);
   
       console.log("Login successful:", response.data);
   
@@ -27,12 +28,16 @@ const LoginPage = () => {
       localStorage.setItem("username", response.data.username); // save username for UI
       localStorage.setItem("role", response.data.role); // save role for access control
   
-      // redirect based on role
-      if (response.data.role === "admin") {
-        navigate("/admin");
-      } else {
-        navigate("/dashboard");
-      }
+
+      setDelayMessage("Login may take a minute (or two) while the backend server wakes up due to the free tier delay. Thanks for waiting!");
+      setTimeout(() => {
+        // redirect based on role
+        if (response.data.role === "admin") {
+          navigate("/admin");
+        } else {
+          navigate("/dashboard");
+        }
+        }, 8000)
   
     } catch (error) {
       setError("Incorrect email or password. Please try again.");
@@ -41,38 +46,40 @@ const LoginPage = () => {
   };
 
   return (
-    <Container maxWidth="sm" sx={{ textAlign: "center", mt: 5 }}>
-      <Typography variant="h4" gutterBottom>
-        login
-      </Typography>
+    <Container>
+      <Box sx={{ mx:"auto", textAlign:"center", width: "30vw" }}>
+        <Typography variant="h4" gutterBottom>
+          login
+        </Typography>
 
-      <Box component="form" onSubmit={handleSubmit} sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
-        <TextField
-          label="email"
-          type="email"
-          name="email"
-          variant="outlined"
-          fullWidth
-          onChange={handleChange}
-          required
-        />
-        <TextField
-          label="password"
-          type="password"
-          name="password"
-          variant="outlined"
-          fullWidth
-          onChange={handleChange}
-          required
-        />
-        <Button type="submit" variant="contained" color="primary" fullWidth>
-          sign in
-        </Button>
+        <Box component="form" onSubmit={handleSubmit} sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
+          <TextField
+            label="email"
+            type="email"
+            name="email"
+            variant="outlined"
+            fullWidth
+            onChange={handleChange}
+            required
+          />
+          <TextField
+            label="password"
+            type="password"
+            name="password"
+            variant="outlined"
+            fullWidth
+            onChange={handleChange}
+            required
+          />
+          <Button type="submit" variant="contained" color="primary" fullWidth>
+            sign in
+          </Button>
+        </Box>
       </Box>
-      <Box >
-      {/* display error if exists */}
-      {error && <Alert sx={{ fontSize: "0.8rem", p: 2, }} severity="error" >{error}</Alert>}
-    </Box>
+      <Box>
+        {delayMessage && (<Alert sx={{ fontSize: "0.8rem" }} severity="success">{delayMessage}</Alert>)}
+        {error && (<Alert sx={{ fontSize: "0.8rem" }} severity="error">{error}</Alert>)}
+      </Box>
     </Container>
   );
 };

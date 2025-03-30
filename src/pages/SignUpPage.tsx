@@ -7,6 +7,7 @@ const SignUpPage = () => {
   const [formData, setFormData] = useState({ username: "", email: "", password: "" });
   const navigate = useNavigate(); // React Router useNavigate hook stored in a variable
   const [error, setError] = useState<string | null>(null); // Stores error message
+  const [delayMessage, setDelayMessage] = useState<string | null>(null);
   
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => { // type of event object specified
@@ -18,12 +19,16 @@ const SignUpPage = () => {
 
     // backend api call
     try {
-      const response = await axios.post("https://data-heist-backend.onrender.com/api/signup", formData); // https://data-heist-backend.onrender.com replace after testing locally http://localhost:5000/api/signup
+      const response = await axios.post(`${import.meta.env.API_URL}/api/signup`, formData);
       
       console.log("account created successfully:", response.data);
       localStorage.setItem("token", response.data.token); // store JWT token locally in the browswer
       localStorage.setItem("username", response.data.username); // save username in local storage for displaying in UI
-      navigate("/dashboard"); // redirect to dashboard
+      setError(null);
+      setDelayMessage("Sign-up may take a minute (or two) while the backend server wakes up due to the free tier delay. Thanks for waiting!");
+      setTimeout(() => {
+        navigate("/dashboard"); // redirect to dashboard
+      }, 8000)
 
     } catch (error) {
       console.error("signup error frontend:", error);
@@ -32,46 +37,46 @@ const SignUpPage = () => {
   };
 
   return (
-    <Container maxWidth="sm" sx={{ textAlign: "center", mt: 5 }}>
-      <Typography variant="h4" gutterBottom>
-        create account
-      </Typography>
-
-      <Box component="form" onSubmit={handleSubmit} sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
-      <TextField
-          label="username"
-          type="username"
-          name="username"
-          variant="outlined"
-          fullWidth
-          onChange={handleChange}
-          required
-        />
-        <TextField
-          label="email"
-          type="email"
-          name="email"
-          variant="outlined"
-          fullWidth
-          onChange={handleChange}
-          required
-        />
-        <TextField
-          label="password"
-          type="password"
-          name="password"
-          variant="outlined"
-          fullWidth
-          onChange={handleChange}
-          required
-        />
-        <Button type="submit" variant="contained" color="primary" fullWidth>
-          create account & login
-        </Button>
+    <Container>
+      <Box sx={{ mx:"auto", textAlign:"center", width: "30vw" }}>
+        <Typography variant="h4" gutterBottom>
+          create account
+        </Typography>
+        <Box component="form" onSubmit={handleSubmit} sx={{ display: "flex", flexDirection: "column", gap: 2, mb:"10"}}>
+          <TextField
+              label="username"
+              type="username"
+              name="username"
+              variant="outlined"
+              onChange={handleChange}
+              required
+            />
+            <TextField
+              label="email"
+              type="email"
+              name="email"
+              variant="outlined"
+              onChange={handleChange}
+              required
+            />
+            <TextField
+              label="password"
+              type="password"
+              name="password"
+              variant="outlined"
+              onChange={handleChange}
+              required
+            />
+            <Button type="submit" variant="contained" color="primary" >
+              create account & login
+            </Button>
+          </Box>
       </Box>
-      {/* display error if exists */}
-      {error && <Alert sx={{ fontSize: "0.8rem", p: 2, }} severity="error" >{error}</Alert>}
-    </Container>
+      <Box>
+        {delayMessage && (<Alert sx={{ fontSize: "0.8rem" }} severity="success">{delayMessage}</Alert>)}
+        {error && (<Alert sx={{ fontSize: "0.8rem" }} severity="error">{error}</Alert>)}
+      </Box>
+  </Container>
   );
 };
 
