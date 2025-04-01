@@ -54,7 +54,6 @@ const AdminPage = () => {
   };
 
   const handleDeleteUser = async (userId: string) => {
-    console.log({userId})
     try {
       const token = localStorage.getItem("token");
 

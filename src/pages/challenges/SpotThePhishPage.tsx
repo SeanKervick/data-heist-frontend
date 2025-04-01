@@ -16,27 +16,25 @@ const SpotThePhish = () => {
   // score keeping
   const [challengeScore, setChallengeScore] = useState<number>(0);
   const totalScore = (Number(localStorage.getItem("totalScore")));
-  console.log(`C2 total score is: ${totalScore}`);
-
   
 
   const handleFlagClick = (id: number) => {
     // if foundFlags does not include the id of the clicked flag
     if (!foundFlags.includes(id)) {
-      // add the id to the array (https://react.dev/learn/updating-arrays-in-state)
-      setFoundFlags([...foundFlags, id]);
-    }
-    if (foundFlags.length + 1 === 3) {
-      setSuccess(true);
-      setTimerStart(false); // Stop the timer
+        // add the id to the array (https://react.dev/learn/updating-arrays-in-state)
+        setFoundFlags([...foundFlags, id]);
+      
+      if (foundFlags.length + 1 === 3) {
+        setSuccess(true);
+        setTimerStart(false); // Stop the timer
 
+        const challengeTotal = (time + ((foundFlags.length + 1) * 10))
+        setChallengeScore(challengeTotal); // set challenge score for end of challenge dialog UI
+        const updatedTotal = totalScore + challengeTotal; // calculate total score
+        localStorage.setItem("totalScore", (updatedTotal).toString()); // store updated total score
 
-      setChallengeScore(time); // set challenge score for end of challenge dialog UI
-      const updatedTotal = totalScore + time; // calculate total score
-      localStorage.setItem("totalScore", (updatedTotal).toString()); // store updated total score
-
-
-      setShowDialog(true); // Show dialog before next challenge
+        setShowDialog(true); // Show dialog before next challenge
+      }
     }
   };
 
@@ -64,7 +62,7 @@ const SpotThePhish = () => {
           success ? (
             <>
               <Typography>
-                Well done, you found 3 red flags common in Phishing emails:
+                Well done, you found ({foundFlags.length}) red flags common in Phishing emails:
                 <br />
                 <br />
               </Typography>
@@ -78,6 +76,10 @@ const SpotThePhish = () => {
                 <Typography>
                   3. Fake login link - Don't be a link clicker!
                 </Typography>
+                <Typography>
+                <br></br>
+                  Score calculation: Time remaining ({time + 1}) + red flags found ({foundFlags.length} * 10) = {challengeScore}
+                </Typography>
               </Box>
             </>
           ) : (
@@ -88,7 +90,7 @@ const SpotThePhish = () => {
         onClose={handleDialogClose}
       />
       {/* timer not shown at end of challenge */}
-      {!success && <Timer initialTime={30} onTimeUp={handleTimeUp} start={timerStart} onTimeUpdate={setTime} />}
+      {!success && <Timer initialTime={60} onTimeUp={handleTimeUp} start={timerStart} onTimeUpdate={setTime} />}
 
       {/* ------------------ challenge card --------------------------*/}
       <Card sx={{ maxWidth: 1200, color: "white", textAlign: "left", pt: 5, margin: "20", }} >

@@ -17,7 +17,6 @@ const CodeExposed = () => {
   // score keeping
   const [challengeScore, setChallengeScore] = useState<number>(0);
   const totalScore = Number(localStorage.getItem("totalScore"));
-  console.log(`C4 total score is: ${totalScore}`);
 
   const handleFlagClick = (id: number) => {
     // if foundFlags does not include the id of the clicked flag
@@ -29,8 +28,9 @@ const CodeExposed = () => {
       setSuccess(true);
       setTimerStart(false); // stop the timer
 
-      setChallengeScore(time); // set challenge score for end of challenge dialog UI
-      const updatedTotal = totalScore + time; // calculate total score
+      const challengeTotal = (time + 50)
+      setChallengeScore(challengeTotal); // set challenge score for end of challenge dialog UI
+      const updatedTotal = totalScore + challengeTotal; // calculate total score
       localStorage.setItem("totalScore", updatedTotal.toString()); // store updated total score
 
       setShowDialog(true); // show dialog before next challenge
@@ -74,7 +74,8 @@ const CodeExposed = () => {
               <Typography>
                 Hardcoding secrets makes them vulnerable to leaks, especially if
                 the code is pushed to a public repository. Use `.env` files or a
-                secrets manager to keep them secure.
+                secrets manager to keep them secure.<br></br><br></br>
+                Score calculation: Time remaining ({time+1}) + 50 (correct answer) = {challengeScore}
               </Typography>
             </>
           ) : (

@@ -22,6 +22,7 @@ const CertInspectorChallenge = () => {
   const [hint, setHint] = useState<string>("");
   const [showHintButton, setShowHintButton] = useState<boolean>(true);
   const [hintUsed, setHintUsed] = useState<number>(0);
+  console.log(totalScore)
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault(); // stops browser from reloading the page
@@ -87,7 +88,7 @@ const CertInspectorChallenge = () => {
                This digital certificate is used to verify a website's authenticity and prevent 'man-in-the-middle' attacks.
                 <br />
                 <br />
-                Score calculation: Time remaining ({time+1}) - Hint if used ({hintUsed}) = {challengeScore}
+                Score calculation: Time remaining ({time + 1}) - hint if used ({hintUsed}) = {challengeScore}
               </Typography>
             </>
           ) : (
@@ -103,7 +104,7 @@ const CertInspectorChallenge = () => {
         {/* content: left side */}
         <Box sx={{ maxWidth: "500px", flex: 1 }}>
           {/* timer (not shown at end of challenge) */}
-          {!success && ( <Timer initialTime={250} onTimeUp={handleTimeUp} start={timerStart} onTimeUpdate={setTime} /> )}
+          {!success && ( <Timer initialTime={360} onTimeUp={handleTimeUp} start={timerStart} onTimeUpdate={setTime} /> )}
 
           {/* inspector image */}
           <Avatar

@@ -78,6 +78,7 @@ const handleTimeUp = () => {
                     You got {correctAnswers}/{quizQuestions.length} questions correct
                     <br />
                     <br />
+                    Score calculation: Time remaining ({time+1}) + ({correctAnswers}x10) = {challengeScore}
                   </Typography>
                 </>
               ) : (

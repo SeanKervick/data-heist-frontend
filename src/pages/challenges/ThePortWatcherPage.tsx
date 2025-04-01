@@ -17,7 +17,7 @@ const PortWatcher = () => {
   const [success, setSuccess] = useState<boolean>(false); // for navigation control
   const [showDialog, setShowDialog] = useState<boolean>(true); // dialog box shown at start
   // points control
-  const [points, setPoints] = useState<number>(100);
+  const [points, setPoints] = useState<number>(250);
   // score keeping
   const [challengeScore, setChallengeScore] = useState<number>(0);
   const totalScore = (Number(localStorage.getItem("totalScore")));
@@ -92,7 +92,7 @@ const PortWatcher = () => {
 
   const handleHintClick = () => {
     setShowHintButton(false);
-    setPoints(points - 15)
+    setPoints(points - 50)
     if (step === 1) {
       setHint("Command: ipconfig")
     } else if (step === 2) {
@@ -131,7 +131,7 @@ const PortWatcher = () => {
               Become an <strong>ethical hacker</strong> and carry out a
               vulnerability scan on a public network using 'nmap', a network scanning tool.<br/><br />
 
-              For this challenge, there is no time limit - but each hint you use will deduct <strong>15 points</strong> from your score.<br/>
+              For this challenge, there is no time limit - but each hint you use will deduct <strong>50 points</strong> from your score.<br/>
               Use the command '<code>nmap -h</code>' for help and clues to find the right command to enter into the terminal. Good luck!
             </Typography>
           )
