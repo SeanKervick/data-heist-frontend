@@ -30,11 +30,11 @@ const CertInspectorChallenge = () => {
     setSuccess(false);
 
     if (
-      certificate === "Saturday, November 22, 2025 at 4:25:32 PM" || 
-      certificate === "Saturday, November 22, 2025" ||
-      certificate === "22/11/2025" ||
-      certificate === "Sat, 22 Nov 2025" || // SSL Labs
-      certificate === "Sat, 22 Nov 2025 16:25:32 UTC" // SSL Labs
+      certificate === "Thursday, March 26, 2026 at 5:44:00 PM" || 
+      certificate === "Thursday, March 26, 2026" ||
+      certificate === "26/03/2026" ||
+      certificate === "Thur, 26 March 2026" || // SSL Labs
+      certificate === "Thur, 26 March 2026 17:44:00 UTC" // SSL Labs
     ) {
       setSuccess(true); // end of challenge
       setTimerStart(false); // stop the timer
